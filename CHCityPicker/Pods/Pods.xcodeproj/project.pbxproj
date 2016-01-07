@@ -1,0 +1,464 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		023644B96C6F7AF7A5DAEA7112092257 /* PureLayoutDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = ACF183D164AEA03A4AA2A2F5185EFE7D /* PureLayoutDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0D997C06E003F9B108E214455303E603 /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F545BE94C48C8AFEED462FE6F8D3597A /* NSLayoutConstraint+PureLayout.m */; };
+		24FC3CD9331AFDAE007B38FD2955DF03 /* ALView+PureLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 45945D8F3DAD605A883B94C9128AB860 /* ALView+PureLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DDFC48C04CEF91E079F78A04883124D /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F48602517ECB353DCB8C98633FCAB09 /* ALView+PureLayout.m */; };
+		5DFA7F00364595D84618472E24637174 /* NSArray+PureLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D7DC82AF6F6260F768473B043656411 /* NSArray+PureLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		61ED601B67D637760B65095C4212AF09 /* Pods-CHCityPicker-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4723BBB7DD4A9CB6B259D6C169D0CE5B /* Pods-CHCityPicker-dummy.m */; };
+		749243C55453C189328ABAD02F62F6AF /* PureLayout-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0A907C755768715DA7F954CDC61B9E /* PureLayout-dummy.m */; };
+		87CE5BDD7C82304B2815E808CC3B429A /* PureLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 57E956DAAFFAB936CB60D9273E05D498 /* PureLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B4B60C49C6D729B6F8AC8BB21222C21B /* PureLayout+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = D10E06F10AB8CECE8141D32B75CCA4FE /* PureLayout+Internal.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CC91B1D6439547C0F00A23150ED2FA31 /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 873FC3649F700A415796A33CE2641055 /* NSArray+PureLayout.m */; };
+		D1F5CC3DB3EF60D8ACB0B284C9DCC3AD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E4E89230EF59BC255123B67864ACF77 /* Foundation.framework */; };
+		E20843672E875AC2A28F1700BC0D5DFE /* NSLayoutConstraint+PureLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = E41D14862AA071D9F8A5E652619270AF /* NSLayoutConstraint+PureLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F9A29E3C4CE7C38B06346429A884ECA2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E4E89230EF59BC255123B67864ACF77 /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E6AFF5FBCBF301FA922786F36CDE2FDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1180CEE9A7899FBC2F29C89669F7B85B;
+			remoteInfo = PureLayout;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		019D9A09D01C4D9284310C42C4629E0E /* Pods-CHCityPicker-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CHCityPicker-acknowledgements.plist"; sourceTree = "<group>"; };
+		129832CAED57495522F06699874AB5E0 /* PureLayout-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PureLayout-prefix.pch"; sourceTree = "<group>"; };
+		1951A12F7C46D8BBF64BC9D3F882A2EA /* PureLayout.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PureLayout.xcconfig; sourceTree = "<group>"; };
+		2F3E26EF8CD4150A214A41FE96592025 /* Pods-CHCityPicker-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CHCityPicker-acknowledgements.markdown"; sourceTree = "<group>"; };
+		3E4E89230EF59BC255123B67864ACF77 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		45945D8F3DAD605A883B94C9128AB860 /* ALView+PureLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "ALView+PureLayout.h"; path = "PureLayout/PureLayout/ALView+PureLayout.h"; sourceTree = "<group>"; };
+		4723BBB7DD4A9CB6B259D6C169D0CE5B /* Pods-CHCityPicker-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CHCityPicker-dummy.m"; sourceTree = "<group>"; };
+		48D20665D6D0B036CCE557C6AFB49DB5 /* Pods-CHCityPicker-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-CHCityPicker-resources.sh"; sourceTree = "<group>"; };
+		57E956DAAFFAB936CB60D9273E05D498 /* PureLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PureLayout.h; path = PureLayout/PureLayout/PureLayout.h; sourceTree = "<group>"; };
+		5F48602517ECB353DCB8C98633FCAB09 /* ALView+PureLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "ALView+PureLayout.m"; path = "PureLayout/PureLayout/ALView+PureLayout.m"; sourceTree = "<group>"; };
+		7D7DC82AF6F6260F768473B043656411 /* NSArray+PureLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSArray+PureLayout.h"; path = "PureLayout/PureLayout/NSArray+PureLayout.h"; sourceTree = "<group>"; };
+		873FC3649F700A415796A33CE2641055 /* NSArray+PureLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSArray+PureLayout.m"; path = "PureLayout/PureLayout/NSArray+PureLayout.m"; sourceTree = "<group>"; };
+		980504CF7E49C131C210FAA08AED0E60 /* libPods-CHCityPicker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CHCityPicker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A542208EA40A6CA35B5A0E67D80E873 /* Pods-CHCityPicker-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-CHCityPicker-frameworks.sh"; sourceTree = "<group>"; };
+		A229EF69DA67BAFE3A67C5372B075993 /* Pods-CHCityPicker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CHCityPicker.release.xcconfig"; sourceTree = "<group>"; };
+		ACF183D164AEA03A4AA2A2F5185EFE7D /* PureLayoutDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PureLayoutDefines.h; path = PureLayout/PureLayout/PureLayoutDefines.h; sourceTree = "<group>"; };
+		B6A81E418BE793C1E236A8AED3791CA4 /* libPureLayout.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPureLayout.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		CE0A907C755768715DA7F954CDC61B9E /* PureLayout-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PureLayout-dummy.m"; sourceTree = "<group>"; };
+		D10E06F10AB8CECE8141D32B75CCA4FE /* PureLayout+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "PureLayout+Internal.h"; path = "PureLayout/PureLayout/PureLayout+Internal.h"; sourceTree = "<group>"; };
+		E41D14862AA071D9F8A5E652619270AF /* NSLayoutConstraint+PureLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSLayoutConstraint+PureLayout.h"; path = "PureLayout/PureLayout/NSLayoutConstraint+PureLayout.h"; sourceTree = "<group>"; };
+		E710E99D7A98EC63360A9D665C0D57A8 /* Pods-CHCityPicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CHCityPicker.debug.xcconfig"; sourceTree = "<group>"; };
+		F545BE94C48C8AFEED462FE6F8D3597A /* NSLayoutConstraint+PureLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSLayoutConstraint+PureLayout.m"; path = "PureLayout/PureLayout/NSLayoutConstraint+PureLayout.m"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2B36ADBEA3BC5DD8C39C3EC396AF1AFE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F9A29E3C4CE7C38B06346429A884ECA2 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2DB0AC907B7BC775B056C95C5DF708F4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1F5CC3DB3EF60D8ACB0B284C9DCC3AD /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2AC903488E8A0750C8A8E2C33286E6C9 /* Pods-CHCityPicker */ = {
+			isa = PBXGroup;
+			children = (
+				2F3E26EF8CD4150A214A41FE96592025 /* Pods-CHCityPicker-acknowledgements.markdown */,
+				019D9A09D01C4D9284310C42C4629E0E /* Pods-CHCityPicker-acknowledgements.plist */,
+				4723BBB7DD4A9CB6B259D6C169D0CE5B /* Pods-CHCityPicker-dummy.m */,
+				9A542208EA40A6CA35B5A0E67D80E873 /* Pods-CHCityPicker-frameworks.sh */,
+				48D20665D6D0B036CCE557C6AFB49DB5 /* Pods-CHCityPicker-resources.sh */,
+				E710E99D7A98EC63360A9D665C0D57A8 /* Pods-CHCityPicker.debug.xcconfig */,
+				A229EF69DA67BAFE3A67C5372B075993 /* Pods-CHCityPicker.release.xcconfig */,
+			);
+			name = "Pods-CHCityPicker";
+			path = "Target Support Files/Pods-CHCityPicker";
+			sourceTree = "<group>";
+		};
+		74CB9703D578923397FD467C29462509 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				980504CF7E49C131C210FAA08AED0E60 /* libPods-CHCityPicker.a */,
+				B6A81E418BE793C1E236A8AED3791CA4 /* libPureLayout.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */,
+				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
+				A2FDD832DA64F35B104DD4C55A31BF8E /* Pods */,
+				74CB9703D578923397FD467C29462509 /* Products */,
+				F7CCCDB39E1416C0111A8364175F5E4F /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		83F65399C3808A743CC1392CF12DD692 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				1951A12F7C46D8BBF64BC9D3F882A2EA /* PureLayout.xcconfig */,
+				CE0A907C755768715DA7F954CDC61B9E /* PureLayout-dummy.m */,
+				129832CAED57495522F06699874AB5E0 /* PureLayout-prefix.pch */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/PureLayout";
+			sourceTree = "<group>";
+		};
+		A2FDD832DA64F35B104DD4C55A31BF8E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AB198DB8875A98298498BA74D26897FE /* PureLayout */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		AB198DB8875A98298498BA74D26897FE /* PureLayout */ = {
+			isa = PBXGroup;
+			children = (
+				45945D8F3DAD605A883B94C9128AB860 /* ALView+PureLayout.h */,
+				5F48602517ECB353DCB8C98633FCAB09 /* ALView+PureLayout.m */,
+				7D7DC82AF6F6260F768473B043656411 /* NSArray+PureLayout.h */,
+				873FC3649F700A415796A33CE2641055 /* NSArray+PureLayout.m */,
+				E41D14862AA071D9F8A5E652619270AF /* NSLayoutConstraint+PureLayout.h */,
+				F545BE94C48C8AFEED462FE6F8D3597A /* NSLayoutConstraint+PureLayout.m */,
+				57E956DAAFFAB936CB60D9273E05D498 /* PureLayout.h */,
+				D10E06F10AB8CECE8141D32B75CCA4FE /* PureLayout+Internal.h */,
+				ACF183D164AEA03A4AA2A2F5185EFE7D /* PureLayoutDefines.h */,
+				83F65399C3808A743CC1392CF12DD692 /* Support Files */,
+			);
+			path = PureLayout;
+			sourceTree = "<group>";
+		};
+		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BF6342C8B29F4CEEA088EFF7AB4DE362 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BF6342C8B29F4CEEA088EFF7AB4DE362 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				3E4E89230EF59BC255123B67864ACF77 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		F7CCCDB39E1416C0111A8364175F5E4F /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				2AC903488E8A0750C8A8E2C33286E6C9 /* Pods-CHCityPicker */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		F55B61687E453AB00A9FF55DD1EEF62B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24FC3CD9331AFDAE007B38FD2955DF03 /* ALView+PureLayout.h in Headers */,
+				5DFA7F00364595D84618472E24637174 /* NSArray+PureLayout.h in Headers */,
+				E20843672E875AC2A28F1700BC0D5DFE /* NSLayoutConstraint+PureLayout.h in Headers */,
+				B4B60C49C6D729B6F8AC8BB21222C21B /* PureLayout+Internal.h in Headers */,
+				87CE5BDD7C82304B2815E808CC3B429A /* PureLayout.h in Headers */,
+				023644B96C6F7AF7A5DAEA7112092257 /* PureLayoutDefines.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		1180CEE9A7899FBC2F29C89669F7B85B /* PureLayout */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EDF3C3143319D78E705CAEECC4FF573D /* Build configuration list for PBXNativeTarget "PureLayout" */;
+			buildPhases = (
+				DF6500A6445D993DBD09A427B3D42A5A /* Sources */,
+				2DB0AC907B7BC775B056C95C5DF708F4 /* Frameworks */,
+				F55B61687E453AB00A9FF55DD1EEF62B /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PureLayout;
+			productName = PureLayout;
+			productReference = B6A81E418BE793C1E236A8AED3791CA4 /* libPureLayout.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		E6B73599A47F9F48F94926416DF499A0 /* Pods-CHCityPicker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C89F8A5E95896B285DA8AEA68AC0E0BD /* Build configuration list for PBXNativeTarget "Pods-CHCityPicker" */;
+			buildPhases = (
+				A7A7C7AEA61C4DC38722E373AB12FE9E /* Sources */,
+				2B36ADBEA3BC5DD8C39C3EC396AF1AFE /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A8F5FB54972E4F78F8EB174029DA92D1 /* PBXTargetDependency */,
+			);
+			name = "Pods-CHCityPicker";
+			productName = "Pods-CHCityPicker";
+			productReference = 980504CF7E49C131C210FAA08AED0E60 /* libPods-CHCityPicker.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = 74CB9703D578923397FD467C29462509 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E6B73599A47F9F48F94926416DF499A0 /* Pods-CHCityPicker */,
+				1180CEE9A7899FBC2F29C89669F7B85B /* PureLayout */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A7A7C7AEA61C4DC38722E373AB12FE9E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61ED601B67D637760B65095C4212AF09 /* Pods-CHCityPicker-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DF6500A6445D993DBD09A427B3D42A5A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5DDFC48C04CEF91E079F78A04883124D /* ALView+PureLayout.m in Sources */,
+				CC91B1D6439547C0F00A23150ED2FA31 /* NSArray+PureLayout.m in Sources */,
+				0D997C06E003F9B108E214455303E603 /* NSLayoutConstraint+PureLayout.m in Sources */,
+				749243C55453C189328ABAD02F62F6AF /* PureLayout-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A8F5FB54972E4F78F8EB174029DA92D1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PureLayout;
+			target = 1180CEE9A7899FBC2F29C89669F7B85B /* PureLayout */;
+			targetProxy = E6AFF5FBCBF301FA922786F36CDE2FDE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		052A17875CB827423D627183396CEB60 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "RELEASE=1";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B37F0F91F85060E28F1DAAB522DC7EC1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		B977C895450A94BAA098810F42020857 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1951A12F7C46D8BBF64BC9D3F882A2EA /* PureLayout.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/PureLayout/PureLayout-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		E7496CEB3ED504BB46B38374D7F57350 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E710E99D7A98EC63360A9D665C0D57A8 /* Pods-CHCityPicker.debug.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		EA76A844CCD720F663E79E490CA89E27 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1951A12F7C46D8BBF64BC9D3F882A2EA /* PureLayout.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/PureLayout/PureLayout-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		F8902AF43A98C79FB77B03A5F042B4B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A229EF69DA67BAFE3A67C5372B075993 /* Pods-CHCityPicker.release.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B37F0F91F85060E28F1DAAB522DC7EC1 /* Debug */,
+				052A17875CB827423D627183396CEB60 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C89F8A5E95896B285DA8AEA68AC0E0BD /* Build configuration list for PBXNativeTarget "Pods-CHCityPicker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E7496CEB3ED504BB46B38374D7F57350 /* Debug */,
+				F8902AF43A98C79FB77B03A5F042B4B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EDF3C3143319D78E705CAEECC4FF573D /* Build configuration list for PBXNativeTarget "PureLayout" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B977C895450A94BAA098810F42020857 /* Debug */,
+				EA76A844CCD720F663E79E490CA89E27 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}
