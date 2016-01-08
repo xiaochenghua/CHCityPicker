@@ -16,6 +16,7 @@
 		DD75D3701C3F5229001C3A58 /* CHCityPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD75D36D1C3F5229001C3A58 /* CHCityPickerViewController.m */; };
 		DD75D3711C3F5229001C3A58 /* CHHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD75D36F1C3F5229001C3A58 /* CHHomeViewController.m */; };
 		DD75D3741C3F53CF001C3A58 /* CHCity.m in Sources */ = {isa = PBXBuildFile; fileRef = DD75D3731C3F53CF001C3A58 /* CHCity.m */; };
+		DD75D3781C3F6A8B001C3A58 /* NSString+Enhance.m in Sources */ = {isa = PBXBuildFile; fileRef = DD75D3771C3F6A8B001C3A58 /* NSString+Enhance.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,8 @@
 		DD75D36F1C3F5229001C3A58 /* CHHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHHomeViewController.m; sourceTree = "<group>"; };
 		DD75D3721C3F53CF001C3A58 /* CHCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CHCity.h; path = CHCityPicker/Model/CHCity.h; sourceTree = SOURCE_ROOT; };
 		DD75D3731C3F53CF001C3A58 /* CHCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHCity.m; path = CHCityPicker/Model/CHCity.m; sourceTree = SOURCE_ROOT; };
+		DD75D3761C3F6A8B001C3A58 /* NSString+Enhance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Enhance.h"; sourceTree = "<group>"; };
+		DD75D3771C3F6A8B001C3A58 /* NSString+Enhance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Enhance.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +92,7 @@
 		DD75D3431C3E44F4001C3A58 /* CHCityPicker */ = {
 			isa = PBXGroup;
 			children = (
+				DD75D3751C3F69DB001C3A58 /* Category */,
 				DD75D36B1C3F5183001C3A58 /* Controller */,
 				DD75D3691C3F5169001C3A58 /* Model */,
 				DD75D36A1C3F5169001C3A58 /* View */,
@@ -147,6 +151,15 @@
 				DD75D36D1C3F5229001C3A58 /* CHCityPickerViewController.m */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		DD75D3751C3F69DB001C3A58 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				DD75D3761C3F6A8B001C3A58 /* NSString+Enhance.h */,
+				DD75D3771C3F6A8B001C3A58 /* NSString+Enhance.m */,
+			);
+			path = Category;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -272,6 +285,7 @@
 			files = (
 				DD75D3741C3F53CF001C3A58 /* CHCity.m in Sources */,
 				DD75D3711C3F5229001C3A58 /* CHHomeViewController.m in Sources */,
+				DD75D3781C3F6A8B001C3A58 /* NSString+Enhance.m in Sources */,
 				DD75D3701C3F5229001C3A58 /* CHCityPickerViewController.m in Sources */,
 				DD75D3491C3E44F4001C3A58 /* AppDelegate.m in Sources */,
 				DD75D3461C3E44F4001C3A58 /* main.m in Sources */,

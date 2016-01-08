@@ -7,11 +7,19 @@
 //
 
 #import "CHCityPickerViewController.h"
+#import "NSString+Enhance.h"
 
 @interface CHCityPickerViewController () <UITableViewDataSource, UITableViewDelegate>
 {
+    /**
+     *  内部是字典，key分别有id,city,pinyin
+     */
     NSArray *citys;
-    NSString *cityName;
+    
+    /**
+     *  内部字典，key分别从A-Z，value是数组对象，分别存放着对应的citys内部的字典
+     */
+    NSMutableArray *cityGroupArray;
 }
 @property (nonatomic, strong) UIButton *closeButton;
 @property (nonatomic, strong) UITableView *tableView;
@@ -22,23 +30,33 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        citys = [self analysisJSONDataWithString:[self stringWithFileName:@"cityList" type:@"json"]];
+        [self initCityData];
     }
     return self;
 }
 
-/**
- *  根据JSON文件名，返回文件内容
- *
- *  @param fileName 文件名
- *  @param type     文件扩展名，@"json"
- *
- *  @return 文件内容
- */
-- (NSString *)stringWithFileName:(NSString *)fileName type:(NSString *)type {
-    NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:type];
-    NSError *error = nil;
-    return [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
+//  初始化城市数据
+- (void)initCityData {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        citys = [self analysisJSONDataWithString:[NSString stringWithFileName:@"cityList" type:@"json"]];
+        
+        cityGroupArray = [NSMutableArray arrayWithCapacity:citys.count];
+        NSMutableDictionary *tmpDict = [NSMutableDictionary dictionaryWithCapacity:26];
+
+        for (int i = 65; i <= 90; i++) {
+            NSString *tmpKey = [NSString stringwithInt:i needUpper:YES];
+            NSMutableArray *tmpValue = [NSMutableArray array];
+            for (int j = 0; j < citys.count; j++) {
+                NSString *capital = [citys[j][@"pinyin"] capitalNeedUpper:YES];
+                if (capital == tmpKey) {
+                    [tmpValue addObject:citys[j]];
+                }
+            }
+            [tmpDict setObject:tmpValue forKey:tmpKey];
+        }
+        [cityGroupArray addObject:tmpDict];
+    });
 }
 
 /**
@@ -62,7 +80,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"%ld", citys.count);
+//    NSLog(@"%ld", citys.count);
     self.view.backgroundColor = kColorF0F0F0;
     self.navigationItem.title = @"请选择城市";
     [self setupLayout];
@@ -70,12 +88,15 @@
 
 - (void)setupLayout {
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.closeButton];
+    [self.view addSubview:self.tableView];
     
-//    [self.view setNeedsUpdateConstraints];
+    [self.view setNeedsUpdateConstraints];
 }
 
 - (void)updateViewConstraints {
     if (!self.didConstraint) {
+        //  tableView
+        [self.tableView autoPinEdgesToSuperviewEdges];
         
         self.didConstraint = YES;
     }
@@ -84,16 +105,17 @@
 
 #pragma mark  - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3 + citys.count;            //  定位城市 + 最近访问城市 + 热门城市 +
+    return 3 + cityGroupArray.count;            //  定位城市 + 最近访问城市 + 热门城市 +
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section <= 3) {
+    if (section < 3) {
         return 1;
     }
-    //  TODO:
-    
-    return 0;
+    NSDictionary *tmpDict = [cityGroupArray objectAtIndex:section - 3];
+    NSString *capital = [NSString stringwithInt:(int)section + 62 needUpper:YES];
+    NSArray *tmpArray = [tmpDict objectForKey:capital];
+    return tmpArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -122,6 +144,8 @@
         _tableView = [[UITableView alloc] init];
         _tableView.dataSource = self;
         _tableView.delegate = self;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        _tableView.separatorColor = kColor(orangeColor);
     }
     return _tableView;
 }

@@ -13,5 +13,7 @@
 @property (nonatomic, copy) NSString *cityName;
 @property (nonatomic, copy) NSString *pinyin;
 
+@property (nonatomic, assign) long selectedTimes;       //  选中次数，次数多的显示与热门城市中
+
 - (instancetype)initWithDict:(NSDictionary *)dict;
 @end
