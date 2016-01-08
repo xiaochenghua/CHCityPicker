@@ -11,10 +11,11 @@
 		DD75D3461C3E44F4001C3A58 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DD75D3451C3E44F4001C3A58 /* main.m */; };
 		DD75D3491C3E44F4001C3A58 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DD75D3481C3E44F4001C3A58 /* AppDelegate.m */; };
 		DD75D3511C3E44F4001C3A58 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD75D3501C3E44F4001C3A58 /* Assets.xcassets */; };
-		DD75D35C1C3E4540001C3A58 /* cities.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD75D35B1C3E4540001C3A58 /* cities.plist */; };
-		DD75D3601C3E46C5001C3A58 /* CHHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD75D35F1C3E46C5001C3A58 /* CHHomeViewController.m */; };
-		DD75D3631C3E4842001C3A58 /* CHCityPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD75D3621C3E4842001C3A58 /* CHCityPickerViewController.m */; };
 		DD75D3661C3E6B2D001C3A58 /* btn_close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DD75D3651C3E6B2D001C3A58 /* btn_close@2x.png */; };
+		DD75D3681C3F504D001C3A58 /* cityList.json in Resources */ = {isa = PBXBuildFile; fileRef = DD75D3671C3F504D001C3A58 /* cityList.json */; };
+		DD75D3701C3F5229001C3A58 /* CHCityPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD75D36D1C3F5229001C3A58 /* CHCityPickerViewController.m */; };
+		DD75D3711C3F5229001C3A58 /* CHHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD75D36F1C3F5229001C3A58 /* CHHomeViewController.m */; };
+		DD75D3741C3F53CF001C3A58 /* CHCity.m in Sources */ = {isa = PBXBuildFile; fileRef = DD75D3731C3F53CF001C3A58 /* CHCity.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,13 +28,15 @@
 		DD75D3481C3E44F4001C3A58 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		DD75D3501C3E44F4001C3A58 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DD75D3551C3E44F4001C3A58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DD75D35B1C3E4540001C3A58 /* cities.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cities.plist; sourceTree = "<group>"; };
 		DD75D35D1C3E45E6001C3A58 /* CHCityPicker-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CHCityPicker-Prefix.pch"; sourceTree = "<group>"; };
-		DD75D35E1C3E46C5001C3A58 /* CHHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHHomeViewController.h; sourceTree = "<group>"; };
-		DD75D35F1C3E46C5001C3A58 /* CHHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHHomeViewController.m; sourceTree = "<group>"; };
-		DD75D3611C3E4842001C3A58 /* CHCityPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCityPickerViewController.h; sourceTree = "<group>"; };
-		DD75D3621C3E4842001C3A58 /* CHCityPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCityPickerViewController.m; sourceTree = "<group>"; };
 		DD75D3651C3E6B2D001C3A58 /* btn_close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_close@2x.png"; sourceTree = "<group>"; };
+		DD75D3671C3F504D001C3A58 /* cityList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cityList.json; sourceTree = "<group>"; };
+		DD75D36C1C3F5229001C3A58 /* CHCityPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCityPickerViewController.h; sourceTree = "<group>"; };
+		DD75D36D1C3F5229001C3A58 /* CHCityPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCityPickerViewController.m; sourceTree = "<group>"; };
+		DD75D36E1C3F5229001C3A58 /* CHHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHHomeViewController.h; sourceTree = "<group>"; };
+		DD75D36F1C3F5229001C3A58 /* CHHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHHomeViewController.m; sourceTree = "<group>"; };
+		DD75D3721C3F53CF001C3A58 /* CHCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CHCity.h; path = CHCityPicker/Model/CHCity.h; sourceTree = SOURCE_ROOT; };
+		DD75D3731C3F53CF001C3A58 /* CHCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHCity.m; path = CHCityPicker/Model/CHCity.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,15 +89,14 @@
 		DD75D3431C3E44F4001C3A58 /* CHCityPicker */ = {
 			isa = PBXGroup;
 			children = (
+				DD75D36B1C3F5183001C3A58 /* Controller */,
+				DD75D3691C3F5169001C3A58 /* Model */,
+				DD75D36A1C3F5169001C3A58 /* View */,
 				DD75D3641C3E6B2D001C3A58 /* images */,
 				DD75D3471C3E44F4001C3A58 /* AppDelegate.h */,
 				DD75D3481C3E44F4001C3A58 /* AppDelegate.m */,
 				DD75D3501C3E44F4001C3A58 /* Assets.xcassets */,
 				DD75D3551C3E44F4001C3A58 /* Info.plist */,
-				DD75D35E1C3E46C5001C3A58 /* CHHomeViewController.h */,
-				DD75D35F1C3E46C5001C3A58 /* CHHomeViewController.m */,
-				DD75D3611C3E4842001C3A58 /* CHCityPickerViewController.h */,
-				DD75D3621C3E4842001C3A58 /* CHCityPickerViewController.m */,
 				DD75D3441C3E44F4001C3A58 /* Supporting Files */,
 			);
 			path = CHCityPicker;
@@ -103,7 +105,7 @@
 		DD75D3441C3E44F4001C3A58 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				DD75D35B1C3E4540001C3A58 /* cities.plist */,
+				DD75D3671C3F504D001C3A58 /* cityList.json */,
 				DD75D3451C3E44F4001C3A58 /* main.m */,
 				DD75D35D1C3E45E6001C3A58 /* CHCityPicker-Prefix.pch */,
 			);
@@ -116,6 +118,35 @@
 				DD75D3651C3E6B2D001C3A58 /* btn_close@2x.png */,
 			);
 			path = images;
+			sourceTree = "<group>";
+		};
+		DD75D3691C3F5169001C3A58 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DD75D3721C3F53CF001C3A58 /* CHCity.h */,
+				DD75D3731C3F53CF001C3A58 /* CHCity.m */,
+			);
+			name = Model;
+			path = images/Model;
+			sourceTree = "<group>";
+		};
+		DD75D36A1C3F5169001C3A58 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			path = images/View;
+			sourceTree = "<group>";
+		};
+		DD75D36B1C3F5183001C3A58 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				DD75D36E1C3F5229001C3A58 /* CHHomeViewController.h */,
+				DD75D36F1C3F5229001C3A58 /* CHHomeViewController.m */,
+				DD75D36C1C3F5229001C3A58 /* CHCityPickerViewController.h */,
+				DD75D36D1C3F5229001C3A58 /* CHCityPickerViewController.m */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -180,7 +211,7 @@
 			files = (
 				DD75D3511C3E44F4001C3A58 /* Assets.xcassets in Resources */,
 				DD75D3661C3E6B2D001C3A58 /* btn_close@2x.png in Resources */,
-				DD75D35C1C3E4540001C3A58 /* cities.plist in Resources */,
+				DD75D3681C3F504D001C3A58 /* cityList.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,8 +270,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD75D3631C3E4842001C3A58 /* CHCityPickerViewController.m in Sources */,
-				DD75D3601C3E46C5001C3A58 /* CHHomeViewController.m in Sources */,
+				DD75D3741C3F53CF001C3A58 /* CHCity.m in Sources */,
+				DD75D3711C3F5229001C3A58 /* CHHomeViewController.m in Sources */,
+				DD75D3701C3F5229001C3A58 /* CHCityPickerViewController.m in Sources */,
 				DD75D3491C3E44F4001C3A58 /* AppDelegate.m in Sources */,
 				DD75D3461C3E44F4001C3A58 /* main.m in Sources */,
 			);

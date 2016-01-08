@@ -10,11 +10,10 @@
 
 @interface CHCityPickerViewController () <UITableViewDataSource, UITableViewDelegate>
 {
-    NSDictionary *cities;
+    NSArray *citys;
     NSString *cityName;
 }
 @property (nonatomic, strong) UIButton *closeButton;
-@property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, assign) BOOL didConstraint;
 @end
@@ -23,39 +22,60 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        cities = [self getInitDataWithFileName:@"cities" type:@"plist"];
+        citys = [self analysisJSONDataWithString:[self stringWithFileName:@"cityList" type:@"json"]];
     }
     return self;
 }
 
-- (NSDictionary *)getInitDataWithFileName:(NSString *)fileName type:(NSString *)type {
+/**
+ *  根据JSON文件名，返回文件内容
+ *
+ *  @param fileName 文件名
+ *  @param type     文件扩展名，@"json"
+ *
+ *  @return 文件内容
+ */
+- (NSString *)stringWithFileName:(NSString *)fileName type:(NSString *)type {
     NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:type];
-    return [NSDictionary dictionaryWithContentsOfFile:path];
+    NSError *error = nil;
+    return [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
+}
+
+/**
+ *  根据JSON文件内容，解析JSON
+ *
+ *  @param jsonString JSON文件内容
+ *
+ *  @return 字典内部的数组，解析失败则返回nil
+ */
+- (NSArray *)analysisJSONDataWithString:(NSString *)jsonString {
+    NSData *data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error = nil;
+    id object = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+    if ([object isKindOfClass:[NSDictionary class]]) {
+        return [(NSDictionary *)object objectForKey:@"citys"];
+    } else {
+        NSLog(@"JSON解析失败！！");
+        return nil;
+    }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"%ld", cities.allKeys.count);
+    NSLog(@"%ld", citys.count);
     self.view.backgroundColor = kColorF0F0F0;
+    self.navigationItem.title = @"请选择城市";
     [self setupLayout];
 }
 
 - (void)setupLayout {
-    [self.navigationController.navigationBar addSubview:self.closeButton];
-    [self.navigationController.navigationBar addSubview:self.titleLabel];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.closeButton];
     
-    [self.view setNeedsUpdateConstraints];
+//    [self.view setNeedsUpdateConstraints];
 }
 
 - (void)updateViewConstraints {
     if (!self.didConstraint) {
-        //  closeButton
-        [self.closeButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:20 * kAutoScaleX];
-        [self.closeButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-        
-        //  titleLabel
-        [self.titleLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-        [self.titleLabel autoAlignAxisToSuperviewAxis:ALAxisVertical];
         
         self.didConstraint = YES;
     }
@@ -64,7 +84,7 @@
 
 #pragma mark  - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3 + cities.allKeys.count;            //  定位城市 + 最近访问城市 + 热门城市 +
+    return 3 + citys.count;            //  定位城市 + 最近访问城市 + 热门城市 +
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -74,6 +94,11 @@
     //  TODO:
     
     return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    //  TODO:
+    return [[UITableViewCell alloc] init];
 }
 
 #pragma mark - Close - Event
@@ -90,15 +115,6 @@
         [_closeButton sizeToFit];
     }
     return _closeButton;
-}
-
-- (UILabel *)titleLabel {
-    if (!_titleLabel) {
-        _titleLabel = [[UILabel alloc] init];
-        _titleLabel.text = @"请选择城市";
-        [_titleLabel sizeToFit];
-    }
-    return _titleLabel;
 }
 
 - (UITableView *)tableView {
