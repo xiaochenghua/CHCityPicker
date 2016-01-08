@@ -17,6 +17,7 @@
 		DD75D3711C3F5229001C3A58 /* CHHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD75D36F1C3F5229001C3A58 /* CHHomeViewController.m */; };
 		DD75D3741C3F53CF001C3A58 /* CHCity.m in Sources */ = {isa = PBXBuildFile; fileRef = DD75D3731C3F53CF001C3A58 /* CHCity.m */; };
 		DD75D3781C3F6A8B001C3A58 /* NSString+Enhance.m in Sources */ = {isa = PBXBuildFile; fileRef = DD75D3771C3F6A8B001C3A58 /* NSString+Enhance.m */; };
+		DD75D37B1C3FA887001C3A58 /* CHCityListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DD75D37A1C3FA887001C3A58 /* CHCityListCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,8 @@
 		DD75D3731C3F53CF001C3A58 /* CHCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHCity.m; path = CHCityPicker/Model/CHCity.m; sourceTree = SOURCE_ROOT; };
 		DD75D3761C3F6A8B001C3A58 /* NSString+Enhance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Enhance.h"; sourceTree = "<group>"; };
 		DD75D3771C3F6A8B001C3A58 /* NSString+Enhance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Enhance.m"; sourceTree = "<group>"; };
+		DD75D3791C3FA887001C3A58 /* CHCityListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CHCityListCell.h; path = CHCityPicker/Category/CHCityListCell.h; sourceTree = SOURCE_ROOT; };
+		DD75D37A1C3FA887001C3A58 /* CHCityListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHCityListCell.m; path = CHCityPicker/Category/CHCityListCell.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +140,8 @@
 		DD75D36A1C3F5169001C3A58 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DD75D3791C3FA887001C3A58 /* CHCityListCell.h */,
+				DD75D37A1C3FA887001C3A58 /* CHCityListCell.m */,
 			);
 			name = View;
 			path = images/View;
@@ -289,6 +294,7 @@
 				DD75D3701C3F5229001C3A58 /* CHCityPickerViewController.m in Sources */,
 				DD75D3491C3E44F4001C3A58 /* AppDelegate.m in Sources */,
 				DD75D3461C3E44F4001C3A58 /* main.m in Sources */,
+				DD75D37B1C3FA887001C3A58 /* CHCityListCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

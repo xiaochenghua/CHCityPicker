@@ -17,7 +17,6 @@
 //  Color
 #define kColor(color)   [UIColor color]
 
-
 #define UIColorFromRGBA(rgbValue, iAlpha) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:iAlpha]
 
 #define UIColorFromRGB(rgbValue) UIColorFromRGBA(rgbValue, 1.0f)
@@ -30,5 +29,8 @@
 //  Scale
 #define kAutoScaleX     ((320 + 414) / 2) / [UIScreen mainScreen].bounds.size.width
 #define kAutoScaleY     ((480 + 736) / 2) / [UIScreen mainScreen].bounds.size.height
+
+//  Font
+#define kFont(size)     [UIFont systemFontOfSize:size]
 
 #endif /* CHCityPicker_Prefix_pch */

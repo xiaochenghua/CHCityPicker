@@ -80,7 +80,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    NSLog(@"%ld", citys.count);
     self.view.backgroundColor = kColorF0F0F0;
     self.navigationItem.title = @"请选择城市";
     [self setupLayout];
@@ -95,7 +94,7 @@
 
 - (void)updateViewConstraints {
     if (!self.didConstraint) {
-        //  tableView
+        //  tableView - AutoLayout
         [self.tableView autoPinEdgesToSuperviewEdges];
         
         self.didConstraint = YES;
