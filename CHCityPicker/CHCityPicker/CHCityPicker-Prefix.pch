@@ -33,4 +33,8 @@
 //  Font
 #define kFont(size)     [UIFont systemFontOfSize:size]
 
+//  CellIdentifier
+#define cellIdentifierButton @"cellIdentifierButton"
+#define cellIdentifierSystem @"cellIdentifierSystem"
+
 #endif /* CHCityPicker_Prefix_pch */

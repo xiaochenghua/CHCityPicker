@@ -27,8 +27,8 @@
 
 @implementation CHCityListCell
 
-- (instancetype)initWithCityListCellType:(CHCityListCellType)type array:(NSArray *)array {
-    if (self = [super init]) {
+- (instancetype)initWithCityListCellType:(CHCityListCellType)type array:(NSArray *)array identifier:(NSString *)identifier {
+    if (self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier]) {
         cellType = type;
         if (cellType == CHCityListCellTypeButton) {
             buttonArray = array;
@@ -70,6 +70,20 @@
     [self.cityNameButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:leftInset];
     [self.cityNameButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:topInset];
     [self.cityNameButton autoSetDimensionsToSize:CGSizeMake(btnWidth, btnHeight)];
+}
+
+- (void)setCellTitle:(NSString *)title array:(NSArray *)array type:(CHCityListCellType)type {
+    if (type == CHCityListCellTypeSystem) {
+        self.textLabel.text = title;
+    } else if (type == CHCityListCellTypeButton) {
+        for (int i = 0; i < self.subviews.count; i++) {
+            if ([self.subviews[i] isKindOfClass:[UIButton class]]) {
+                self.cityNameButton.titleLabel.text = array[i];
+            } else {
+                NSLog(@"error：Cell子控件不是UIButton");
+            }
+        }
+    }
 }
 
 #pragma mark - 懒加载

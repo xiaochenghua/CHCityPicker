@@ -7,6 +7,7 @@
 //
 
 #import "CHCityPickerViewController.h"
+#import "CHCityListCell.h"
 #import "NSString+Enhance.h"
 
 @interface CHCityPickerViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -20,6 +21,21 @@
      *  内部字典，key分别从A-Z，value是数组对象，分别存放着对应的citys内部的字典
      */
     NSMutableArray *cityGroupArray;
+    
+    /**
+     *  Cell类型
+     */
+    CHCityListCellType listCellType;
+    
+    /**
+     *  历史访问城市列表
+     */
+    NSMutableArray *historyCitys;
+    
+    /**
+     *  热门城市列表
+     */
+    NSMutableArray *hotCitys;
 }
 @property (nonatomic, strong) UIButton *closeButton;
 @property (nonatomic, strong) UITableView *tableView;
@@ -57,6 +73,23 @@
         }
         [cityGroupArray addObject:tmpDict];
     });
+}
+
+- (NSArray *)historyCitys {
+    if (!historyCitys) {
+        [historyCitys addObject:@"深圳"];
+        [historyCitys addObject:@"广州"];
+        [historyCitys addObject:@"上海"];
+    }
+    return historyCitys;
+}
+
+- (NSArray *)hotCitys {
+    if (!hotCitys) {
+        NSArray *tmpArray = [NSArray arrayWithObjects:@"上海", @"北京", @"广州", @"深圳", @"天津", @"杭州", @"南京", @"武汉", @"成都", @"沈阳", @"西安", nil];
+        [hotCitys addObjectsFromArray:tmpArray];
+    }
+    return hotCitys;
 }
 
 /**
@@ -111,15 +144,58 @@
     if (section < 3) {
         return 1;
     }
-    NSDictionary *tmpDict = [cityGroupArray objectAtIndex:section - 3];
-    NSString *capital = [NSString stringwithInt:(int)section + 62 needUpper:YES];
-    NSArray *tmpArray = [tmpDict objectForKey:capital];
-    return tmpArray.count;
+//    NSDictionary *tmpDict = [cityGroupArray objectAtIndex:section - 3];
+//    NSString *capital = [NSString stringwithInt:(int)section + 62 needUpper:YES];
+//    NSArray *tmpArray = [tmpDict objectForKey:capital];
+//    return tmpArray.count;
+    return [self getArrayWithArray:cityGroupArray section:section].count;
+}
+
+- (NSArray *)getArrayWithArray:(NSArray *)array section:(NSInteger)section {
+    id tmpobj1 = [cityGroupArray objectAtIndex:section - 3];
+    if ([tmpobj1 isKindOfClass:[NSDictionary class]]) {
+        NSString *capital = [NSString stringwithInt:(int)section + 62 needUpper:YES];
+        id tmpobj2 = [tmpobj1 objectForKey:capital];
+        if ([tmpobj2 isKindOfClass:[NSArray class]]) {
+            return tmpobj2;
+        } else {
+            NSLog(@"【2】获取JSON内部数据失败");
+            return nil;
+        }
+    } else {
+        NSLog(@"【1】获取JSON内部数据失败");
+        return nil;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //  TODO:
-    return [[UITableViewCell alloc] init];
+    CHCityListCell *cell = nil;
+    if (indexPath.section >= 3) {
+        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierSystem];
+        if (!cell) {
+            cell = [[CHCityListCell alloc] initWithCityListCellType:CHCityListCellTypeSystem array:nil identifier:cellIdentifierSystem];
+        }
+        NSArray *tmpArray = [self getArrayWithArray:cityGroupArray section:indexPath.section];
+        NSString *title = [tmpArray[indexPath.row] objectForKey:@"city"];
+        [cell setCellTitle:title array:nil type:CHCityListCellTypeSystem];
+    } else if (indexPath.section == 0) {
+        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierButton];
+        if (!cell) {
+            cell = [[CHCityListCell alloc] initWithCityListCellType:CHCityListCellTypeButton array:nil identifier:cellIdentifierButton];
+        }
+        //  TODO：定位
+    }
+    else {
+        NSArray *array = (indexPath.section == 1) ? historyCitys : hotCitys;        //  indexPath.section == 2  -->  hot
+        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierButton];
+        if (!cell) {
+            cell = [[CHCityListCell alloc] initWithCityListCellType:CHCityListCellTypeButton array:array identifier:cellIdentifierButton];
+        }
+        [cell setCellTitle:nil array:array type:CHCityListCellTypeButton];
+    }
+    
+    
+    return cell;
 }
 
 #pragma mark - Close - Event
