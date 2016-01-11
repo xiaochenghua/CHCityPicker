@@ -7,7 +7,8 @@
 //
 
 #import "CHCityPickerViewController.h"
-#import "CHCityListCell.h"
+#import "CHCityListSystemCell.h"
+#import "CHCityListCustomCell.h"
 #import "NSString+Enhance.h"
 
 @interface CHCityPickerViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -46,11 +47,11 @@
 /**
  *  历史访问城市列表
  */
-@property (nonatomic, copy) NSMutableArray *historyCitys;
+@property (nonatomic, copy) NSMutableArray<NSString *> *historyCitys;
 /**
  *  热门城市列表
  */
-@property (nonatomic, copy) NSMutableArray *hotCitys;
+@property (nonatomic, copy) NSMutableArray<NSString *> *hotCitys;
 @end
 
 @implementation CHCityPickerViewController
@@ -165,8 +166,12 @@
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CHCityListCell *cell = [self tableView:tableView indexPath:indexPath];
-    return [cell calcRowHeight];
+    CHCityListBaseCell *cell = [self tableView:tableView indexPath:indexPath];
+    if (cell.cityListCellType == CHCityListCellTypeSystem) {
+        return 44;
+    } else {
+        return [(CHCityListCustomCell *)cell calcRowHeight];
+    }
 }
 
 /**
@@ -177,30 +182,32 @@
  *
  *  @return
  */
-- (CHCityListCell *)tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
-    CHCityListCell *cell = nil;
+- (CHCityListBaseCell *)tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
     if (indexPath.section >= 3) {
-        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierSystem];
+        CHCityListSystemCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierSystem];
         if (!cell) {
-            cell = [[CHCityListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierSystem type:CHCityListCellTypeSystem];
+            cell = [[CHCityListSystemCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierSystem];
         }
         NSArray *tmpArray = [self getArrayWithArray:cityGroupArray section:indexPath.section];
         NSString *title = [tmpArray[indexPath.row] objectForKey:@"city"];
-        [cell setCellSystemTitle:title type:CHCityListCellTypeSystem];
-    } else if (indexPath.section == 0) {
-//        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierButton];
-//        if (!cell) {
-//            cell = [[CHCityListCell alloc] initWithCityArray:nil identifier:cellIdentifierButton type:CHCityListCellTypeButton];
-//        }
-//        //  TODO：定位
+        [cell configCellTitle:title];
+        return cell;
     }
-    else {
-        NSArray *array = (indexPath.section == 1) ? self.historyCitys : self.hotCitys;        //  indexPath.section == 2  -->  hot
-        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierButton];
+    
+    CHCityListCustomCell *cell = nil;
+    if (indexPath.section == 0) {                        //  TODO：定位
+        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierCustom];
         if (!cell) {
-            cell = [[CHCityListCell alloc] initWithCityArray:array identifier:cellIdentifierButton type:CHCityListCellTypeButton];
+            cell = [[CHCityListCustomCell alloc] initWithCityNames:@[@"深圳"]];
         }
-        [cell setCellCustomTitleArray:array type:CHCityListCellTypeButton];
+        [cell configCellTitle];
+    } else if (indexPath.section == 1 || indexPath.section == 2) {
+        NSArray<NSString *> *array = (indexPath.section == 1) ? self.historyCitys : self.hotCitys;        //  indexPath.section == 2  -->  hot
+        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierCustom];
+        if (!cell) {
+            cell = [[CHCityListCustomCell alloc] initWithCityNames:array];
+        }
+        [cell configCellTitle];
     }
     return cell;
 }
@@ -232,14 +239,14 @@
     return _tableView;
 }
 
-- (NSMutableArray *)historyCitys {
+- (NSMutableArray<NSString *> *)historyCitys {
     if (!_historyCitys) {
         _historyCitys = [NSMutableArray arrayWithObjects:@"上海", @"广州", @"深圳", @"南昌", nil];
     }
     return _historyCitys;
 }
 
-- (NSMutableArray *)hotCitys {
+- (NSMutableArray<NSString *> *)hotCitys {
     if (!_hotCitys) {
         _hotCitys = [NSMutableArray arrayWithObjects:@"上海", @"北京", @"广州", @"深圳", @"天津", @"杭州", @"南京", @"武汉", @"成都", @"沈阳", @"西安", nil];
     }
