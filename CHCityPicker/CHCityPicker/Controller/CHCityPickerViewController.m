@@ -26,20 +26,31 @@
      *  Cell类型
      */
     CHCityListCellType listCellType;
-    
-    /**
-     *  历史访问城市列表
-     */
-    NSMutableArray *historyCitys;
-    
-    /**
-     *  热门城市列表
-     */
-    NSMutableArray *hotCitys;
 }
+
+/**
+ *  关闭按钮
+ */
 @property (nonatomic, strong) UIButton *closeButton;
+
+/**
+ *  tableView
+ */
 @property (nonatomic, strong) UITableView *tableView;
+
+/**
+ *  是否已经布局
+ */
 @property (nonatomic, assign) BOOL didConstraint;
+
+/**
+ *  历史访问城市列表
+ */
+@property (nonatomic, copy) NSMutableArray *historyCitys;
+/**
+ *  热门城市列表
+ */
+@property (nonatomic, copy) NSMutableArray *hotCitys;
 @end
 
 @implementation CHCityPickerViewController
@@ -51,45 +62,25 @@
     return self;
 }
 
-//  初始化城市数据
+/**
+ *  初始化城市数据
+ */
 - (void)initCityData {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        citys = [self analysisJSONDataWithString:[NSString stringWithFileName:@"cityList" type:@"json"]];
-        
-        cityGroupArray = [NSMutableArray arrayWithCapacity:citys.count];
-        NSMutableDictionary *tmpDict = [NSMutableDictionary dictionaryWithCapacity:26];
-
-        for (int i = 65; i <= 90; i++) {
-            NSString *tmpKey = [NSString stringwithInt:i needUpper:YES];
-            NSMutableArray *tmpValue = [NSMutableArray array];
-            for (int j = 0; j < citys.count; j++) {
-                NSString *capital = [citys[j][@"pinyin"] capitalNeedUpper:YES];
-                if (capital == tmpKey) {
-                    [tmpValue addObject:citys[j]];
-                }
+    citys = [self analysisJSONDataWithString:[NSString stringWithFileName:@"cityList" type:@"json"]];
+    cityGroupArray = [NSMutableArray arrayWithCapacity:citys.count];
+    NSMutableDictionary *tmpDict = [NSMutableDictionary dictionaryWithCapacity:26];
+    for (int i = 65; i <= 90; i++) {
+        NSString *tmpKey = [NSString stringwithInt:i needUpper:YES];
+        NSMutableArray *tmpValue = [NSMutableArray array];
+        for (int j = 0; j < citys.count; j++) {
+            NSString *capital = [citys[j][@"pinyin"] capitalNeedUpper:YES];
+            if (capital == tmpKey) {
+                [tmpValue addObject:citys[j]];
             }
-            [tmpDict setObject:tmpValue forKey:tmpKey];
         }
-        [cityGroupArray addObject:tmpDict];
-    });
-}
-
-- (NSArray *)historyCitys {
-    if (!historyCitys) {
-        [historyCitys addObject:@"深圳"];
-        [historyCitys addObject:@"广州"];
-        [historyCitys addObject:@"上海"];
+        [tmpDict setObject:tmpValue forKey:tmpKey];
     }
-    return historyCitys;
-}
-
-- (NSArray *)hotCitys {
-    if (!hotCitys) {
-        NSArray *tmpArray = [NSArray arrayWithObjects:@"上海", @"北京", @"广州", @"深圳", @"天津", @"杭州", @"南京", @"武汉", @"成都", @"沈阳", @"西安", nil];
-        [hotCitys addObjectsFromArray:tmpArray];
-    }
-    return hotCitys;
+    [cityGroupArray addObject:tmpDict];
 }
 
 /**
@@ -169,32 +160,48 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [self tableView:tableView indexPath:indexPath];
+}
+
+#pragma mark - UITableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CHCityListCell *cell = [self tableView:tableView indexPath:indexPath];
+    return [cell calcRowHeight];
+}
+
+/**
+ *  返回Cell
+ *
+ *  @param tableView
+ *  @param indexPath
+ *
+ *  @return
+ */
+- (CHCityListCell *)tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
     CHCityListCell *cell = nil;
     if (indexPath.section >= 3) {
         cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierSystem];
         if (!cell) {
-            cell = [[CHCityListCell alloc] initWithCityListCellType:CHCityListCellTypeSystem array:nil identifier:cellIdentifierSystem];
+            cell = [[CHCityListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierSystem type:CHCityListCellTypeSystem];
         }
         NSArray *tmpArray = [self getArrayWithArray:cityGroupArray section:indexPath.section];
         NSString *title = [tmpArray[indexPath.row] objectForKey:@"city"];
-        [cell setCellTitle:title array:nil type:CHCityListCellTypeSystem];
+        [cell setCellSystemTitle:title type:CHCityListCellTypeSystem];
     } else if (indexPath.section == 0) {
-        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierButton];
-        if (!cell) {
-            cell = [[CHCityListCell alloc] initWithCityListCellType:CHCityListCellTypeButton array:nil identifier:cellIdentifierButton];
-        }
-        //  TODO：定位
+//        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierButton];
+//        if (!cell) {
+//            cell = [[CHCityListCell alloc] initWithCityArray:nil identifier:cellIdentifierButton type:CHCityListCellTypeButton];
+//        }
+//        //  TODO：定位
     }
     else {
-        NSArray *array = (indexPath.section == 1) ? historyCitys : hotCitys;        //  indexPath.section == 2  -->  hot
+        NSArray *array = (indexPath.section == 1) ? self.historyCitys : self.hotCitys;        //  indexPath.section == 2  -->  hot
         cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierButton];
         if (!cell) {
-            cell = [[CHCityListCell alloc] initWithCityListCellType:CHCityListCellTypeButton array:array identifier:cellIdentifierButton];
+            cell = [[CHCityListCell alloc] initWithCityArray:array identifier:cellIdentifierButton type:CHCityListCellTypeButton];
         }
-        [cell setCellTitle:nil array:array type:CHCityListCellTypeButton];
+        [cell setCellCustomTitleArray:array type:CHCityListCellTypeButton];
     }
-    
-    
     return cell;
 }
 
@@ -223,6 +230,20 @@
         _tableView.separatorColor = kColor(orangeColor);
     }
     return _tableView;
+}
+
+- (NSMutableArray *)historyCitys {
+    if (!_historyCitys) {
+        _historyCitys = [NSMutableArray arrayWithObjects:@"上海", @"广州", @"深圳", @"南昌", nil];
+    }
+    return _historyCitys;
+}
+
+- (NSMutableArray *)hotCitys {
+    if (!_hotCitys) {
+        _hotCitys = [NSMutableArray arrayWithObjects:@"上海", @"北京", @"广州", @"深圳", @"天津", @"杭州", @"南京", @"武汉", @"成都", @"沈阳", @"西安", nil];
+    }
+    return _hotCitys;
 }
 
 - (void)didReceiveMemoryWarning {

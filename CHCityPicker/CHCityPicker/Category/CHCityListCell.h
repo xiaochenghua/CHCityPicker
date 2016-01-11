@@ -15,23 +15,30 @@ typedef NS_ENUM(NSInteger, CHCityListCellType) {
 
 @interface CHCityListCell : UITableViewCell
 
-/**
- *  根据CHCityListCellType初始化Cell
- *
- *  @param type CHCityListCellType
- *  @param array 需要初始化的按钮数组
- *  @param identifier 
- *
- *  @return 返回Cell
- */
-- (instancetype)initWithCityListCellType:(CHCityListCellType)type array:(NSArray *)array identifier:(NSString *)identifier;
+- (instancetype)initWithCityArray:(NSArray *)array identifier:(NSString *)identifier type:(CHCityListCellType)type;
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier type:(CHCityListCellType)type;
 
 /**
- *  设置Cell的标题，按钮或标签标题文字
+ *  设置系统Default样式Cell的标题
  *
- *  @param title 文字，可为nil
- *  @param array 按钮名称数组，可为nil
- *  @param type  类型，按钮/标签
+ *  @param title 标题
+ *  @param type  样式，CHCityListCellTypeSystem
  */
-- (void)setCellTitle:(NSString *)title array:(NSArray *)array type:(CHCityListCellType)type;
+- (void)setCellSystemTitle:(NSString *)title type:(CHCityListCellType)type;
+
+/**
+ *  设置按钮样式Cell，按钮标题为array[i]
+ *
+ *  @param array 按钮标题数组
+ *  @param type  样式，CHCityListCellTypeButton
+ */
+- (void)setCellCustomTitleArray:(NSArray *)array type:(CHCityListCellType)type;
+
+/**
+ *  计算行高
+ *
+ *  @return 行高
+ */
+- (CGFloat)calcRowHeight;
 @end
