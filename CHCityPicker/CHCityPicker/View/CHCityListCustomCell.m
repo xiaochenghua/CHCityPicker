@@ -12,7 +12,6 @@
 @interface CHCityListCustomCell ()
 {
     NSUInteger defaultCol;
-    CGFloat contentViewWidth;
     CGFloat marginX, marginY;
     CGFloat btnWidth, btnHeight;
     NSArray<NSString *> *cityNames;
@@ -25,24 +24,33 @@
 
 - (instancetype)initWithCityNames:(NSArray<NSString *> *)array {
     if (self = [super init]) {
-        self.cityListCellType = CHCityListCellTypeCustom;
         cityNames = [NSArray arrayWithArray:array];
         cityButtons = [NSMutableArray arrayWithCapacity:cityNames.count];
         [self initDefaultData];
         [self setupSubViewsWithCityNames:array];
+        self.cityListCellType = CHCityListCellTypeCustom;
+        self.rowHeight = (btnHeight + marginY) * ((cityButtons.count - 1) / defaultCol) + marginY * 2 + btnHeight;
+        self.backgroundColor = kColorF0F0F0;
     }
     return self;
 }
 
+/**
+ *  初始化默认数据
+ */
 - (void)initDefaultData {
     defaultCol = 3;
-    contentViewWidth = self.contentView.bounds.size.width;
     marginX = 20.0f;
-    marginY = 15.0f;
-    btnWidth = (contentViewWidth - marginX * 5) / 3;
-    btnHeight = 40.0f;
+    marginY = 12.0f;
+    btnWidth = ([[UIScreen mainScreen] applicationFrame].size.width - marginX * 5) / 3;
+    btnHeight = 38.0f;
 }
 
+/**
+ *  设置子控件
+ *
+ *  @param array 给定数组
+ */
 - (void)setupSubViewsWithCityNames:(NSArray<NSString *> *)array {
     for (int i = 0; i < array.count; i++) {
         CHCityButton *btn = [[CHCityButton alloc] init];
@@ -52,6 +60,12 @@
     }
 }
 
+/**
+ *  自动布局
+ *
+ *  @param btn   布局的控件
+ *  @param index 索引值，下标
+ */
 - (void)setupLayoutWithButton:(UIButton *)btn index:(NSUInteger)index {
     NSUInteger row = index / defaultCol;
     NSUInteger col = index % defaultCol;
@@ -68,9 +82,5 @@
     for (int i = 0; i < cityNames.count; i++) {
         [cityButtons[i] setTitle:cityNames[i] forState:UIControlStateNormal];
     }
-}
-
-- (CGFloat)calcRowHeight {
-    return CGRectGetMaxY([cityButtons lastObject].frame) + marginY;
 }
 @end

@@ -136,10 +136,6 @@
     if (section < 3) {
         return 1;
     }
-//    NSDictionary *tmpDict = [cityGroupArray objectAtIndex:section - 3];
-//    NSString *capital = [NSString stringwithInt:(int)section + 62 needUpper:YES];
-//    NSArray *tmpArray = [tmpDict objectForKey:capital];
-//    return tmpArray.count;
     return [self getArrayWithArray:cityGroupArray section:section].count;
 }
 
@@ -167,11 +163,7 @@
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CHCityListBaseCell *cell = [self tableView:tableView indexPath:indexPath];
-    if (cell.cityListCellType == CHCityListCellTypeSystem) {
-        return 44;
-    } else {
-        return [(CHCityListCustomCell *)cell calcRowHeight];
-    }
+    return [cell calcRowHeight];
 }
 
 /**
@@ -209,6 +201,7 @@
         }
         [cell configCellTitle];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 

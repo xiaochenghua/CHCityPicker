@@ -9,5 +9,11 @@
 #import "CHCityListBaseCell.h"
 
 @interface CHCityListSystemCell : CHCityListBaseCell
+
+/**
+ *  配置Cell标题
+ *
+ *  @param title 标题
+ */
 - (void)configCellTitle:(NSString *)title;
 @end

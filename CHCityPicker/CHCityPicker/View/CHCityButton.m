@@ -13,8 +13,8 @@
 - (instancetype)init {
     if (self = [super init]) {
         self.backgroundColor = kColor(whiteColor);
-        self.titleLabel.font = kFont(12);
-        self.titleLabel.textColor = kColorADADAD;
+        self.titleLabel.font = kFont(15);
+        [self setTitleColor:kColor8E8E8E forState:UIControlStateNormal];
         self.layer.cornerRadius = 2.0f;
         self.layer.masksToBounds = YES;
         self.layer.borderWidth = 0.5f;

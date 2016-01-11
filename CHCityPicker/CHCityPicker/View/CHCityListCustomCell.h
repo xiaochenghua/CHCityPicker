@@ -11,7 +11,18 @@
 @class CHCityButton;
 
 @interface CHCityListCustomCell : CHCityListBaseCell
+
+/**
+ *  初始化Cell数据
+ *
+ *  @param array 给定数组
+ *
+ *  @return Cell
+ */
 - (instancetype)initWithCityNames:(NSArray<NSString *> *)array;
+
+/**
+ *  配置Cell按钮的标题
+ */
 - (void)configCellTitle;
-- (CGFloat)calcRowHeight;
 @end

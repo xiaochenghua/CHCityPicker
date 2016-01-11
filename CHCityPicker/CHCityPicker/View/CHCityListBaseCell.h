@@ -20,4 +20,16 @@ typedef NS_ENUM(NSInteger, CHCityListCellType) {
  */
 @property (nonatomic, assign) CHCityListCellType cityListCellType;
 
+/**
+ *  行高
+ */
+@property (nonatomic, assign) CGFloat rowHeight;
+
+/**
+ *  计算行高
+ *
+ *  @return 行高
+ */
+- (CGFloat)calcRowHeight;
+
 @end

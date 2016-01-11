@@ -10,4 +10,8 @@
 
 @implementation CHCityListBaseCell
 
+- (CGFloat)calcRowHeight {
+    return self.rowHeight;
+}
+
 @end
