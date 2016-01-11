@@ -71,12 +71,13 @@
     cityGroupArray = [NSMutableArray arrayWithCapacity:citys.count];
     NSMutableDictionary *tmpDict = [NSMutableDictionary dictionaryWithCapacity:26];
     for (int i = 65; i <= 90; i++) {
-        NSString *tmpKey = [NSString stringwithInt:i needUpper:YES];
+        NSString *tmpKey = [NSString stringwithInt:i needUpper:YES];        //  tmpKey - A
         NSMutableArray *tmpValue = [NSMutableArray array];
         for (int j = 0; j < citys.count; j++) {
             NSString *capital = [citys[j][@"pinyin"] capitalNeedUpper:YES];
             if (capital == tmpKey) {
                 [tmpValue addObject:citys[j]];
+                continue;
             }
         }
         [tmpDict setObject:tmpValue forKey:tmpKey];
