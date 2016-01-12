@@ -30,7 +30,7 @@
         [self setupSubViewsWithCityNames:array];
         self.cityListCellType = CHCityListCellTypeCustom;
         self.rowHeight = (btnHeight + marginY) * ((cityButtons.count - 1) / defaultCol) + marginY * 2 + btnHeight;
-        self.backgroundColor = kColorF0F0F0;
+        self.backgroundColor = kColorWithRGB(0xf0f0f0);
     }
     return self;
 }

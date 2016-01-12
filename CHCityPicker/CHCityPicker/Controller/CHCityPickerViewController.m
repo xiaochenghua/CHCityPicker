@@ -67,7 +67,8 @@
  *  初始化城市数据
  */
 - (void)initCityData {
-    citys = [self analysisJSONDataWithString:[NSString stringWithFileName:@"cityList" type:@"json"]];
+    NSString *file = [NSString stringWithFileName:@"cityList" type:@"json"];
+    citys = [self analysisJSONDataWithString:file];
     cityGroupArray = [NSMutableArray arrayWithCapacity:citys.count];
     NSMutableDictionary *tmpDict = [NSMutableDictionary dictionaryWithCapacity:26];
     for (int i = 65; i <= 90; i++) {
@@ -81,8 +82,8 @@
             }
         }
         [tmpDict setObject:tmpValue forKey:tmpKey];
+        [cityGroupArray addObject:tmpDict];
     }
-    [cityGroupArray addObject:tmpDict];
 }
 
 /**
@@ -106,7 +107,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = kColorF0F0F0;
+    self.view.backgroundColor = kColorWithRGB(0xf0f0f0);
     self.navigationItem.title = @"请选择城市";
     [self setupLayout];
 }
@@ -148,11 +149,11 @@
         if ([tmpobj2 isKindOfClass:[NSArray class]]) {
             return tmpobj2;
         } else {
-            NSLog(@"【2】获取JSON内部数据失败");
+            NSLog(@"1--获取JSON内部数据失败");
             return nil;
         }
     } else {
-        NSLog(@"【1】获取JSON内部数据失败");
+        NSLog(@"2--获取JSON内部数据失败");
         return nil;
     }
 }

@@ -12,19 +12,17 @@
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 
+//  import
 #import "PureLayout.h"
+#import "JSONModel.h"
 
 //  Color
 #define kColor(color)   [UIColor color]
 
-#define UIColorFromRGBA(rgbValue, iAlpha) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:iAlpha]
-
-#define UIColorFromRGB(rgbValue) UIColorFromRGBA(rgbValue, 1.0f)
-
-#define kColorF0F0F0    UIColorFromRGB(0xf0f0f0)
-#define kColorD0D0D0    UIColorFromRGB(0xd0d0d0)
-#define kColorADADAD    UIColorFromRGB(0xadadad)
-#define kColor8E8E8E    UIColorFromRGB(0x8e8e8e)
+#define kColorWithRGB(rgbValue) \
+[UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16)) / 255.0 \
+                green:((float)((rgbValue & 0xFF00) >> 8)) / 255.0 \
+                blue:((float)(rgbValue & 0xFF)) / 255.0 alpha:1.0]
 
 //  Scale
 #define kAutoScaleX     ((320 + 414) / 2) / [UIScreen mainScreen].bounds.size.width

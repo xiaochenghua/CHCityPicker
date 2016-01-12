@@ -14,11 +14,11 @@
     if (self = [super init]) {
         self.backgroundColor = kColor(whiteColor);
         self.titleLabel.font = kFont(15);
-        [self setTitleColor:kColor8E8E8E forState:UIControlStateNormal];
+        [self setTitleColor:kColorWithRGB(0x8e8e8e) forState:UIControlStateNormal];
         self.layer.cornerRadius = 2.0f;
         self.layer.masksToBounds = YES;
         self.layer.borderWidth = 0.5f;
-        self.layer.borderColor = kColorD0D0D0.CGColor;
+        self.layer.borderColor = kColorWithRGB(0xd0d0d0).CGColor;
     }
     return self;
 }
