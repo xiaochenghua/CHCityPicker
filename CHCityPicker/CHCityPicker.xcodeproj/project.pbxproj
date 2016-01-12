@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		208F6AC0A8073B977536B2B3 /* libPods-CHCityPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FCF706A1A75ABC345C90FFD /* libPods-CHCityPicker.a */; };
+		DD0E69CA1C44DCF700813D76 /* CHCityListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = DD0E69C91C44DCF700813D76 /* CHCityListHeaderView.m */; };
 		DD75D3461C3E44F4001C3A58 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DD75D3451C3E44F4001C3A58 /* main.m */; };
 		DD75D3491C3E44F4001C3A58 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DD75D3481C3E44F4001C3A58 /* AppDelegate.m */; };
 		DD75D3511C3E44F4001C3A58 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD75D3501C3E44F4001C3A58 /* Assets.xcassets */; };
@@ -26,6 +27,8 @@
 		1DC78EC89BBD4DE09BB7A91F /* Pods-CHCityPicker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CHCityPicker.release.xcconfig"; path = "Pods/Target Support Files/Pods-CHCityPicker/Pods-CHCityPicker.release.xcconfig"; sourceTree = "<group>"; };
 		3FCF706A1A75ABC345C90FFD /* libPods-CHCityPicker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CHCityPicker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		90EFC5E06C405DDB4181B98E /* Pods-CHCityPicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CHCityPicker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CHCityPicker/Pods-CHCityPicker.debug.xcconfig"; sourceTree = "<group>"; };
+		DD0E69C81C44DCF700813D76 /* CHCityListHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CHCityListHeaderView.h; path = CHCityPicker/View/CHCityListHeaderView.h; sourceTree = SOURCE_ROOT; };
+		DD0E69C91C44DCF700813D76 /* CHCityListHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHCityListHeaderView.m; path = CHCityPicker/View/CHCityListHeaderView.m; sourceTree = SOURCE_ROOT; };
 		DD75D3411C3E44F4001C3A58 /* CHCityPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CHCityPicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD75D3451C3E44F4001C3A58 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DD75D3471C3E44F4001C3A58 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -143,6 +146,8 @@
 				DD9DF64A1C43ACA3001E670B /* CHCityListCustomCell.m */,
 				DD9DF63A1C43A423001E670B /* CHCityButton.h */,
 				DD9DF63B1C43A423001E670B /* CHCityButton.m */,
+				DD0E69C81C44DCF700813D76 /* CHCityListHeaderView.h */,
+				DD0E69C91C44DCF700813D76 /* CHCityListHeaderView.m */,
 			);
 			name = View;
 			path = images/View;
@@ -298,6 +303,7 @@
 				DD75D3491C3E44F4001C3A58 /* AppDelegate.m in Sources */,
 				DD75D3461C3E44F4001C3A58 /* main.m in Sources */,
 				DD9DF63C1C43A423001E670B /* CHCityButton.m in Sources */,
+				DD0E69CA1C44DCF700813D76 /* CHCityListHeaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,7 @@
 #import "CHCityPickerViewController.h"
 #import "CHCityListSystemCell.h"
 #import "CHCityListCustomCell.h"
+#import "chcityListHeaderView.h"
 #import "NSString+Enhance.h"
 
 @interface CHCityPickerViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -27,6 +28,11 @@
      *  Cell类型
      */
     CHCityListCellType listCellType;
+    
+    /**
+     *  索引值数组
+     */
+    NSMutableArray *indexArray;
 }
 
 /**
@@ -71,6 +77,7 @@
     citys = [self analysisJSONDataWithString:file];
     cityGroupArray = [NSMutableArray arrayWithCapacity:citys.count];
     NSMutableDictionary *tmpDict = [NSMutableDictionary dictionaryWithCapacity:26];
+    indexArray = [NSMutableArray array];
     for (int i = 65; i <= 90; i++) {
         NSString *tmpKey = [NSString stringwithInt:i needUpper:YES];        //  tmpKey - A
         NSMutableArray *tmpValue = [NSMutableArray array];
@@ -78,10 +85,14 @@
             NSString *capital = [citys[j][@"pinyin"] capitalNeedUpper:YES];
             if (capital == tmpKey) {
                 [tmpValue addObject:citys[j]];
-                continue;
             }
         }
         [tmpDict setObject:tmpValue forKey:tmpKey];
+        if ([[tmpDict objectForKey:tmpKey] count]) {
+            [indexArray addObject:tmpKey];
+        } else {
+            [tmpDict removeObjectForKey:tmpKey];
+        }
         [cityGroupArray addObject:tmpDict];
     }
 }
@@ -107,7 +118,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = kColorWithRGB(0xf0f0f0);
+    self.view.backgroundColor = kColorCodeWithRGB(0xf0f0f0);
     self.navigationItem.title = @"请选择城市";
     [self setupLayout];
 }
@@ -166,6 +177,34 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CHCityListBaseCell *cell = [self tableView:tableView indexPath:indexPath];
     return [cell calcRowHeight];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+//    if (section >= 3) {
+//        NSString *key = [NSString stringwithInt:(int)(section + 62) needUpper:YES];
+//        if (![indexArray containsObject:key]) {
+//            return nil;
+//        }
+//    }
+    
+    CHCityListHeaderView *view = [[CHCityListHeaderView alloc] initWithHeaderViewStyle:HeaderViewStyleSection];
+    NSString *title;
+    if (section == 0) {
+        title = @"定位城市";
+    } else if (section == 1) {
+        title = @"最近访问城市";
+    } else if (section == 2) {
+        title = @"热门城市";
+    } else {
+        title = indexArray[section - 3];
+    }
+    [view configTitle:title];
+    return view;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 25;
 }
 
 /**
@@ -228,6 +267,7 @@
         _tableView = [[UITableView alloc] init];
         _tableView.dataSource = self;
         _tableView.delegate = self;
+        _tableView.tableHeaderView = [[CHCityListHeaderView alloc] initWithHeaderViewStyle:HeaderViewStyleTableView];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         _tableView.separatorColor = kColor(orangeColor);
     }
