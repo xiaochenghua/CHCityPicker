@@ -6,6 +6,7 @@
 target 'CHCityPicker' do
 
 pod 'PureLayout'
+pod 'JSONModel'
 
 end
 

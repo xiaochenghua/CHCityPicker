@@ -1,5 +1,5 @@
 //
-//  CHCityPickerViewController.h
+//  CHDelegate.h
 //  CHCityPicker
 //
 //  Created by APP on 16/1/7.
@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CHCityPickerViewController : UIViewController
+@interface CHDelegate : UIResponder <UIApplicationDelegate>
+
+@property (strong, nonatomic) UIWindow *window;
+
 
 @end
+

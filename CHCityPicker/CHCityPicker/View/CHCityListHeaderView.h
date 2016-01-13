@@ -14,6 +14,6 @@ typedef NS_ENUM(NSInteger, HeaderViewStyle) {
 };
 
 @interface CHCityListHeaderView : UIView
-- (instancetype)initWithHeaderViewStyle:(HeaderViewStyle)style;
++ (instancetype)headerViewWithStyle:(HeaderViewStyle)style;
 - (void)configTitle:(NSString *)title;
 @end

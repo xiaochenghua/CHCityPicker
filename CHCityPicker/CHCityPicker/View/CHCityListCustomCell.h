@@ -13,13 +13,13 @@
 @interface CHCityListCustomCell : CHCityListBaseCell
 
 /**
- *  初始化Cell数据
- *
- *  @param array 给定数组
- *
- *  @return Cell
- */
-- (instancetype)initWithCityNames:(NSArray<NSString *> *)array;
+*  创建cell并给子控件赋值
+*
+*  @param array 给定数组
+*
+*  @return cell
+*/
++ (instancetype)cellWithCityNames:(NSArray<NSString *> *)array;
 
 /**
  *  配置Cell按钮的标题

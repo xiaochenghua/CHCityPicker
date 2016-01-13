@@ -1,19 +1,19 @@
 //
-//  AppDelegate.m
+//  CHDelegate.m
 //  CHCityPicker
 //
 //  Created by APP on 16/1/7.
 //  Copyright © 2016年 Personal. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "CHDelegate.h"
 #import "CHHomeViewController.h"
 
-@interface AppDelegate ()
+@interface CHDelegate ()
 
 @end
 
-@implementation AppDelegate
+@implementation CHDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {

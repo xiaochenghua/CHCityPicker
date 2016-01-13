@@ -15,6 +15,10 @@
 
 @implementation CHCityListHeaderView
 
++ (instancetype)headerViewWithStyle:(HeaderViewStyle)style {
+    return [[self alloc] initWithHeaderViewStyle:style];
+}
+
 - (instancetype)initWithHeaderViewStyle:(HeaderViewStyle)style {
     if (self = [super init]) {
         if (style == HeaderViewStyleSection) {

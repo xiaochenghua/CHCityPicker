@@ -22,6 +22,10 @@
 
 @implementation CHCityListCustomCell
 
++ (instancetype)cellWithCityNames:(NSArray<NSString *> *)array {
+    return [[self alloc] initWithCityNames:array];
+}
+
 - (instancetype)initWithCityNames:(NSArray<NSString *> *)array {
     if (self = [super init]) {
         cityNames = [NSArray arrayWithArray:array];

@@ -7,7 +7,7 @@
 //
 
 #import "CHHomeViewController.h"
-#import "CHCityPickerViewController.h"
+#import "CHCityPickerController.h"
 
 @interface CHHomeViewController ()
 @property (nonatomic, strong) UIButton *selectButton;
@@ -54,7 +54,7 @@
 }
 
 - (void)selectButtonPressed:(UIButton *)btn {
-    CHCityPickerViewController *viewController = [[CHCityPickerViewController alloc] init];
+    CHCityPickerController *viewController = [[CHCityPickerController alloc] init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     [self presentViewController:navigationController animated:YES completion:nil];
 }

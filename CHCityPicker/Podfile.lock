@@ -1,10 +1,13 @@
 PODS:
+  - JSONModel (1.2.0)
   - PureLayout (3.0.1)
 
 DEPENDENCIES:
+  - JSONModel
   - PureLayout
 
 SPEC CHECKSUMS:
-  PureLayout: 8ab63dd07c58fa99c6af71990fa09fd06a933b9c
+  JSONModel: 12523685c4b623553ccf844bbbf7007624317b2c
+  PureLayout: f35f5384c9c4e4479df041dbe33ad7577b71ddfb
 
 COCOAPODS: 0.39.0

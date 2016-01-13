@@ -10,17 +10,19 @@
 		208F6AC0A8073B977536B2B3 /* libPods-CHCityPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FCF706A1A75ABC345C90FFD /* libPods-CHCityPicker.a */; };
 		DD0E69CA1C44DCF700813D76 /* CHCityListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = DD0E69C91C44DCF700813D76 /* CHCityListHeaderView.m */; };
 		DD75D3461C3E44F4001C3A58 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DD75D3451C3E44F4001C3A58 /* main.m */; };
-		DD75D3491C3E44F4001C3A58 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DD75D3481C3E44F4001C3A58 /* AppDelegate.m */; };
+		DD75D3491C3E44F4001C3A58 /* CHDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DD75D3481C3E44F4001C3A58 /* CHDelegate.m */; };
 		DD75D3511C3E44F4001C3A58 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD75D3501C3E44F4001C3A58 /* Assets.xcassets */; };
 		DD75D3661C3E6B2D001C3A58 /* btn_close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DD75D3651C3E6B2D001C3A58 /* btn_close@2x.png */; };
 		DD75D3681C3F504D001C3A58 /* cityList.json in Resources */ = {isa = PBXBuildFile; fileRef = DD75D3671C3F504D001C3A58 /* cityList.json */; };
-		DD75D3701C3F5229001C3A58 /* CHCityPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD75D36D1C3F5229001C3A58 /* CHCityPickerViewController.m */; };
 		DD75D3711C3F5229001C3A58 /* CHHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD75D36F1C3F5229001C3A58 /* CHHomeViewController.m */; };
 		DD75D3781C3F6A8B001C3A58 /* NSString+Enhance.m in Sources */ = {isa = PBXBuildFile; fileRef = DD75D3771C3F6A8B001C3A58 /* NSString+Enhance.m */; };
 		DD9DF63C1C43A423001E670B /* CHCityButton.m in Sources */ = {isa = PBXBuildFile; fileRef = DD9DF63B1C43A423001E670B /* CHCityButton.m */; };
 		DD9DF63F1C43AAE8001E670B /* CHCityListBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DD9DF63E1C43AAE8001E670B /* CHCityListBaseCell.m */; };
 		DD9DF6481C43AC1A001E670B /* CHCityListSystemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DD9DF6471C43AC1A001E670B /* CHCityListSystemCell.m */; };
 		DD9DF64B1C43ACA3001E670B /* CHCityListCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DD9DF64A1C43ACA3001E670B /* CHCityListCustomCell.m */; };
+		E3D5DB9F1C45FDED00B132F7 /* CHCityPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D5DB9E1C45FDED00B132F7 /* CHCityPickerController.m */; };
+		E3D5DBA31C461A3200B132F7 /* CHCityList.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D5DBA21C461A3200B132F7 /* CHCityList.m */; };
+		E3D5DBA61C461A7C00B132F7 /* CHCity.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D5DBA51C461A7C00B132F7 /* CHCity.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,15 +33,13 @@
 		DD0E69C91C44DCF700813D76 /* CHCityListHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHCityListHeaderView.m; path = CHCityPicker/View/CHCityListHeaderView.m; sourceTree = SOURCE_ROOT; };
 		DD75D3411C3E44F4001C3A58 /* CHCityPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CHCityPicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD75D3451C3E44F4001C3A58 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		DD75D3471C3E44F4001C3A58 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		DD75D3481C3E44F4001C3A58 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		DD75D3471C3E44F4001C3A58 /* CHDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHDelegate.h; sourceTree = "<group>"; };
+		DD75D3481C3E44F4001C3A58 /* CHDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHDelegate.m; sourceTree = "<group>"; };
 		DD75D3501C3E44F4001C3A58 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DD75D3551C3E44F4001C3A58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD75D35D1C3E45E6001C3A58 /* CHCityPicker-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CHCityPicker-Prefix.pch"; sourceTree = "<group>"; };
 		DD75D3651C3E6B2D001C3A58 /* btn_close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_close@2x.png"; sourceTree = "<group>"; };
 		DD75D3671C3F504D001C3A58 /* cityList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cityList.json; sourceTree = "<group>"; };
-		DD75D36C1C3F5229001C3A58 /* CHCityPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCityPickerViewController.h; sourceTree = "<group>"; };
-		DD75D36D1C3F5229001C3A58 /* CHCityPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCityPickerViewController.m; sourceTree = "<group>"; };
 		DD75D36E1C3F5229001C3A58 /* CHHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHHomeViewController.h; sourceTree = "<group>"; };
 		DD75D36F1C3F5229001C3A58 /* CHHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHHomeViewController.m; sourceTree = "<group>"; };
 		DD75D3761C3F6A8B001C3A58 /* NSString+Enhance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Enhance.h"; sourceTree = "<group>"; };
@@ -52,6 +52,12 @@
 		DD9DF6471C43AC1A001E670B /* CHCityListSystemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHCityListSystemCell.m; path = CHCityPicker/View/CHCityListSystemCell.m; sourceTree = SOURCE_ROOT; };
 		DD9DF6491C43ACA3001E670B /* CHCityListCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CHCityListCustomCell.h; path = CHCityPicker/View/CHCityListCustomCell.h; sourceTree = SOURCE_ROOT; };
 		DD9DF64A1C43ACA3001E670B /* CHCityListCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHCityListCustomCell.m; path = CHCityPicker/View/CHCityListCustomCell.m; sourceTree = SOURCE_ROOT; };
+		E3D5DB9D1C45FDED00B132F7 /* CHCityPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCityPickerController.h; sourceTree = "<group>"; };
+		E3D5DB9E1C45FDED00B132F7 /* CHCityPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCityPickerController.m; sourceTree = "<group>"; };
+		E3D5DBA11C461A3200B132F7 /* CHCityList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCityList.h; sourceTree = "<group>"; };
+		E3D5DBA21C461A3200B132F7 /* CHCityList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCityList.m; sourceTree = "<group>"; };
+		E3D5DBA41C461A7C00B132F7 /* CHCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCity.h; sourceTree = "<group>"; };
+		E3D5DBA51C461A7C00B132F7 /* CHCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCity.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,12 +110,13 @@
 		DD75D3431C3E44F4001C3A58 /* CHCityPicker */ = {
 			isa = PBXGroup;
 			children = (
+				E3D5DBA01C45FE2700B132F7 /* Model */,
 				DD75D3751C3F69DB001C3A58 /* Category */,
 				DD75D36B1C3F5183001C3A58 /* Controller */,
 				DD75D36A1C3F5169001C3A58 /* View */,
 				DD75D3641C3E6B2D001C3A58 /* images */,
-				DD75D3471C3E44F4001C3A58 /* AppDelegate.h */,
-				DD75D3481C3E44F4001C3A58 /* AppDelegate.m */,
+				DD75D3471C3E44F4001C3A58 /* CHDelegate.h */,
+				DD75D3481C3E44F4001C3A58 /* CHDelegate.m */,
 				DD75D3501C3E44F4001C3A58 /* Assets.xcassets */,
 				DD75D3551C3E44F4001C3A58 /* Info.plist */,
 				DD75D3441C3E44F4001C3A58 /* Supporting Files */,
@@ -158,8 +165,8 @@
 			children = (
 				DD75D36E1C3F5229001C3A58 /* CHHomeViewController.h */,
 				DD75D36F1C3F5229001C3A58 /* CHHomeViewController.m */,
-				DD75D36C1C3F5229001C3A58 /* CHCityPickerViewController.h */,
-				DD75D36D1C3F5229001C3A58 /* CHCityPickerViewController.m */,
+				E3D5DB9D1C45FDED00B132F7 /* CHCityPickerController.h */,
+				E3D5DB9E1C45FDED00B132F7 /* CHCityPickerController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -171,6 +178,17 @@
 				DD75D3771C3F6A8B001C3A58 /* NSString+Enhance.m */,
 			);
 			path = Category;
+			sourceTree = "<group>";
+		};
+		E3D5DBA01C45FE2700B132F7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E3D5DBA11C461A3200B132F7 /* CHCityList.h */,
+				E3D5DBA21C461A3200B132F7 /* CHCityList.m */,
+				E3D5DBA41C461A7C00B132F7 /* CHCity.h */,
+				E3D5DBA51C461A7C00B132F7 /* CHCity.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -294,15 +312,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3D5DBA61C461A7C00B132F7 /* CHCity.m in Sources */,
 				DD9DF6481C43AC1A001E670B /* CHCityListSystemCell.m in Sources */,
 				DD75D3711C3F5229001C3A58 /* CHHomeViewController.m in Sources */,
 				DD75D3781C3F6A8B001C3A58 /* NSString+Enhance.m in Sources */,
 				DD9DF64B1C43ACA3001E670B /* CHCityListCustomCell.m in Sources */,
 				DD9DF63F1C43AAE8001E670B /* CHCityListBaseCell.m in Sources */,
-				DD75D3701C3F5229001C3A58 /* CHCityPickerViewController.m in Sources */,
-				DD75D3491C3E44F4001C3A58 /* AppDelegate.m in Sources */,
+				DD75D3491C3E44F4001C3A58 /* CHDelegate.m in Sources */,
+				E3D5DBA31C461A3200B132F7 /* CHCityList.m in Sources */,
 				DD75D3461C3E44F4001C3A58 /* main.m in Sources */,
 				DD9DF63C1C43A423001E670B /* CHCityButton.m in Sources */,
+				E3D5DB9F1C45FDED00B132F7 /* CHCityPickerController.m in Sources */,
 				DD0E69CA1C44DCF700813D76 /* CHCityListHeaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
