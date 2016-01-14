@@ -39,6 +39,7 @@
 
 @property (nonatomic, strong) UIButton *closeButton;
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, assign) BOOL didConstraint;
 
 @property (nonatomic,copy) NSMutableArray<NSString *> *historyCitys;
@@ -116,9 +117,9 @@
 
 - (CHCityListBaseCell *)tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
     if (indexPath.section >= 3) {
-        CHCityListSystemCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierSystem];
+        CHCityListSystemCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifierSystem];
         if (!cell) {
-            cell = [[CHCityListSystemCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierSystem];
+            cell = [[CHCityListSystemCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellIdentifierSystem];
         }
         NSString *capital = capitalArray[indexPath.section - 3];
         CHCity *tmpCity = [cityDict objectForKey:capital][indexPath.row];
@@ -127,21 +128,21 @@
     }
     
     CHCityListCustomCell *cell = nil;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (indexPath.section == 0) {                        //  TODO：定位
-        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierCustom];
+        cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifierCustom];
         if (!cell) {
             cell = [CHCityListCustomCell cellWithCityNames:@[@"深圳"]];
         }
         [cell configCellTitle];
     } else if (indexPath.section == 1 || indexPath.section == 2) {
         NSArray<NSString *> *array = (indexPath.section == 1) ? self.historyCitys : self.hotCitys;        //  indexPath.section == 2  -->  hot
-        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierCustom];
+        cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifierCustom];
         if (!cell) {
             cell = [CHCityListCustomCell cellWithCityNames:array];
         }
         [cell configCellTitle];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
@@ -173,7 +174,7 @@
             title = capitalArray[section - 3];
             break;
     }
-    CHCityListHeaderView *view = [CHCityListHeaderView headerViewWithStyle:HeaderViewStyleSection];
+    CHCityListHeaderView *view = [CHCityListHeaderView headerView];
     [view configTitle:title];
     return view;
 }
@@ -203,11 +204,19 @@
         _tableView = [[UITableView alloc] init];
         _tableView.dataSource = self;
         _tableView.delegate = self;
-        _tableView.tableHeaderView = [CHCityListHeaderView headerViewWithStyle:HeaderViewStyleTableView];
+        _tableView.tableHeaderView = self.searchBar;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         _tableView.separatorColor = kColor(orangeColor);
     }
     return _tableView;
+}
+
+- (UISearchBar *)searchBar {
+    if (!_searchBar) {
+        _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 44)];
+        _searchBar.placeholder = @"城市/行政区/拼音";
+    }
+    return _searchBar;
 }
 
 - (NSMutableArray<NSString *> *)historyCitys {

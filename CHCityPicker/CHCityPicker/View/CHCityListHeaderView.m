@@ -9,41 +9,27 @@
 #import "CHCityListHeaderView.h"
 
 @interface CHCityListHeaderView ()
-@property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) UILabel     *titleLabel;
 @end
 
 @implementation CHCityListHeaderView
 
-+ (instancetype)headerViewWithStyle:(HeaderViewStyle)style {
-    return [[self alloc] initWithHeaderViewStyle:style];
++ (instancetype)headerView {
+    return [[self alloc] init];
 }
 
-- (instancetype)initWithHeaderViewStyle:(HeaderViewStyle)style {
+- (instancetype)init {
     if (self = [super init]) {
-        if (style == HeaderViewStyleSection) {
-            self.backgroundColor = kColor(grayColor);
-            [self setupTitleLabel];
-        } else if (style == HeaderViewStyleTableView) {
-            [self setupSearchBar];
-        }
+        self.backgroundColor = kColor(grayColor);
+        [self setupTitleLabel];
     }
     return self;
 }
 
 - (void)setupTitleLabel {
     [self addSubview:self.titleLabel];
-    [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:20];
+    [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     [self.titleLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-}
-
-- (void)setupSearchBar {
-    [self addSubview:self.searchBar];
-    
-    [self.searchBar autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.searchBar autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    [self.searchBar autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    [self.searchBar autoPinEdgeToSuperviewEdge:ALEdgeTop];
 }
 
 - (void)configTitle:(NSString *)title {
@@ -51,14 +37,6 @@
 }
 
 #pragma mark - Lazy Loading
-- (UISearchBar *)searchBar {
-    if (!_searchBar) {
-        _searchBar = [[UISearchBar alloc] init];
-        _searchBar.placeholder = @"城市/行政区/拼音";
-    }
-    return _searchBar;
-}
-
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];

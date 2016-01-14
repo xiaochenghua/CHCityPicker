@@ -34,7 +34,10 @@
 #define kFont(size)     [UIFont systemFontOfSize:size]
 
 //  CellIdentifier
-#define cellIdentifierCustom @"cellIdentifierCustom"
-#define cellIdentifierSystem @"cellIdentifierSystem"
+#define kCellIdentifierCustom @"cellIdentifierCustom"
+#define kCellIdentifierSystem @"cellIdentifierSystem"
+
+//  Width
+#define kScreenWidth [UIScreen mainScreen].bounds.size.width
 
 #endif /* CHCityPicker_Prefix_pch */

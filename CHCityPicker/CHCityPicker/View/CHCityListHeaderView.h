@@ -8,12 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSInteger, HeaderViewStyle) {
-    HeaderViewStyleSection,
-    HeaderViewStyleTableView
-};
-
 @interface CHCityListHeaderView : UIView
-+ (instancetype)headerViewWithStyle:(HeaderViewStyle)style;
++ (instancetype)headerView;
 - (void)configTitle:(NSString *)title;
 @end
