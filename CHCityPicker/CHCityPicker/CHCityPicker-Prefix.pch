@@ -39,7 +39,8 @@
 #define kCellIdentifierSystem @"cellIdentifierSystem"
 
 //  Width
-#define kScreenWidth [UIScreen mainScreen].bounds.size.width
+#define kScreenWidth  [UIScreen mainScreen].bounds.size.width
+#define kScreenHeight [UIScreen mainScreen].bounds.size.height
 
 //  Margin
 #define marginX 20.0f
@@ -49,6 +50,6 @@
 #define buttonWidth  20.0f
 #define buttonHeight 20.0f
 #define navigationWidth  buttonWidth
-#define navigationHeight buttonHeight
+//#define navigationHeight buttonHeight
 
 #endif /* CHCityPicker_Prefix_pch */

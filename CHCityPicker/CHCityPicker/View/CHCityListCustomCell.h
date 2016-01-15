@@ -25,4 +25,5 @@
  *  配置Cell按钮的标题
  */
 - (void)configCellTitle;
+
 @end

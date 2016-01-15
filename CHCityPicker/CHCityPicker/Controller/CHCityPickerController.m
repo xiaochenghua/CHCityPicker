@@ -36,6 +36,11 @@
      *  A-Z的字母组合，部分字母没有！！
      */
     NSMutableArray *capitalArray;
+    
+    /**
+     *  导航视图数组，@[@"@", @"&", @"$"] + capitalArray，前三个元素分别表示定位城市、最近访问城市和热门城市
+     */
+    NSMutableArray *navigationArray;
 }
 
 @property (nonatomic, strong) UIButton *closeButton;
@@ -87,7 +92,6 @@
     self.view.backgroundColor = kColorCodeWithRGB(0xf0f0f0);
     self.navigationItem.title = @"请选择城市";
     [self setupLayout];
-    NSLog(@"self.view.frame.size.height = %lf", self.view.frame.size.height);
 }
 
 - (void)setupLayout {
@@ -101,9 +105,9 @@
     if (!self.didConstraint) {
         [self.tableView autoPinEdgesToSuperviewEdges];
         
-        [self.navigationView autoSetDimensionsToSize:[self.navigationView calcNavigationViewSizeWithButtonArray:self.navigationView.subviews]];
+        [self.navigationView autoSetDimensionsToSize:CGSizeMake(navigationWidth, self.view.frame.size.height - 64)];
         [self.navigationView autoPinEdgeToSuperviewEdge:ALEdgeRight];
-        [self.navigationView autoAlignAxisToSuperviewMarginAxis:ALAxisHorizontal];
+        [self.navigationView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:64];
         
         self.didConstraint = YES;
     }
@@ -216,6 +220,7 @@
         _tableView.tableHeaderView = self.searchBar;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         _tableView.separatorColor = kColor(orangeColor);
+        _tableView.showsVerticalScrollIndicator = NO;
     }
     return _tableView;
 }
@@ -230,7 +235,9 @@
 
 - (CHCityNavigationView *)navigationView {
     if (!_navigationView) {
-        _navigationView = [CHCityNavigationView navigationViewWithButtonArray:capitalArray];
+        navigationArray = [NSMutableArray arrayWithArray:@[@"@", @"&", @"$"]];
+        [navigationArray addObjectsFromArray:capitalArray];
+        _navigationView = [CHCityNavigationView navigationViewWithButtonArray:navigationArray];
         _navigationView.backgroundColor = kColor(whiteColor);
     }
     return _navigationView;
