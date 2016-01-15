@@ -22,22 +22,14 @@
     return needUpper ? [tmpString uppercaseString] : [tmpString lowercaseString];
 }
 
-- (int)asciiNeedUpper:(BOOL)needUpper {
-    
-    NSUInteger index = 0;
-    
-    if ([self containsString:@"_"]) {
-        NSRange tmpRange = [self rangeOfString:@"_"];
-        index = tmpRange.location + 1;
-    }
-    
-    NSString *tmpString = [self capitalNeedUpper:needUpper];
-    return [tmpString characterAtIndex:index];
-}
-
 - (NSString *)capitalNeedUpper:(BOOL)needUpper {
-    NSString *tmpString = needUpper ? [self uppercaseString] : [self lowercaseString];
-    return [tmpString substringToIndex:1];
+    NSUInteger index = 0;
+    if ([self containsString:@"_"]) {
+        NSRange range = [self rangeOfString:@"_"];
+        index = range.location + 1;
+    }
+    NSString *tmpString = [self substringWithRange:NSMakeRange(index, 1)];
+    return needUpper ? [tmpString uppercaseString] : [tmpString lowercaseString];
 }
 
 @end

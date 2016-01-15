@@ -31,14 +31,6 @@
 + (NSString *)stringwithInt:(int)number needUpper:(BOOL)needUpper;
 
 /**
- *  返回字符串指定下标的字符对应的ASCII码数值
- *
- *  @param needUpper 是否需要转换成大写
- *
- *  @return ASCII码数值
- */
-- (int)asciiNeedUpper:(BOOL)needUpper;
-/**
  *  返回字符串的首字母
  *
  *  @param needUpper 是否需要转换成大写
