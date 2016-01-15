@@ -20,6 +20,8 @@
 		DD9DF63F1C43AAE8001E670B /* CHCityListBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DD9DF63E1C43AAE8001E670B /* CHCityListBaseCell.m */; };
 		DD9DF6481C43AC1A001E670B /* CHCityListSystemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DD9DF6471C43AC1A001E670B /* CHCityListSystemCell.m */; };
 		DD9DF64B1C43ACA3001E670B /* CHCityListCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DD9DF64A1C43ACA3001E670B /* CHCityListCustomCell.m */; };
+		E3151CC51C478E4E000C0DCC /* CHCityNavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3151CC41C478E4E000C0DCC /* CHCityNavigationView.m */; };
+		E3151CC81C4889C2000C0DCC /* CHButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E3151CC71C4889C2000C0DCC /* CHButton.m */; };
 		E3D5DB9F1C45FDED00B132F7 /* CHCityPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D5DB9E1C45FDED00B132F7 /* CHCityPickerController.m */; };
 		E3D5DBA31C461A3200B132F7 /* CHCityList.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D5DBA21C461A3200B132F7 /* CHCityList.m */; };
 		E3D5DBA61C461A7C00B132F7 /* CHCity.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D5DBA51C461A7C00B132F7 /* CHCity.m */; };
@@ -52,6 +54,10 @@
 		DD9DF6471C43AC1A001E670B /* CHCityListSystemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHCityListSystemCell.m; path = CHCityPicker/View/CHCityListSystemCell.m; sourceTree = SOURCE_ROOT; };
 		DD9DF6491C43ACA3001E670B /* CHCityListCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CHCityListCustomCell.h; path = CHCityPicker/View/CHCityListCustomCell.h; sourceTree = SOURCE_ROOT; };
 		DD9DF64A1C43ACA3001E670B /* CHCityListCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHCityListCustomCell.m; path = CHCityPicker/View/CHCityListCustomCell.m; sourceTree = SOURCE_ROOT; };
+		E3151CC31C478E4E000C0DCC /* CHCityNavigationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CHCityNavigationView.h; path = CHCityPicker/View/CHCityNavigationView.h; sourceTree = SOURCE_ROOT; };
+		E3151CC41C478E4E000C0DCC /* CHCityNavigationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHCityNavigationView.m; path = CHCityPicker/View/CHCityNavigationView.m; sourceTree = SOURCE_ROOT; };
+		E3151CC61C4889C2000C0DCC /* CHButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CHButton.h; path = CHCityPicker/View/CHButton.h; sourceTree = SOURCE_ROOT; };
+		E3151CC71C4889C2000C0DCC /* CHButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHButton.m; path = CHCityPicker/View/CHButton.m; sourceTree = SOURCE_ROOT; };
 		E3D5DB9D1C45FDED00B132F7 /* CHCityPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCityPickerController.h; sourceTree = "<group>"; };
 		E3D5DB9E1C45FDED00B132F7 /* CHCityPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCityPickerController.m; sourceTree = "<group>"; };
 		E3D5DBA11C461A3200B132F7 /* CHCityList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCityList.h; sourceTree = "<group>"; };
@@ -155,6 +161,10 @@
 				DD9DF63B1C43A423001E670B /* CHCityButton.m */,
 				DD0E69C81C44DCF700813D76 /* CHCityListHeaderView.h */,
 				DD0E69C91C44DCF700813D76 /* CHCityListHeaderView.m */,
+				E3151CC31C478E4E000C0DCC /* CHCityNavigationView.h */,
+				E3151CC41C478E4E000C0DCC /* CHCityNavigationView.m */,
+				E3151CC61C4889C2000C0DCC /* CHButton.h */,
+				E3151CC71C4889C2000C0DCC /* CHButton.m */,
 			);
 			name = View;
 			path = images/View;
@@ -314,6 +324,7 @@
 			files = (
 				E3D5DBA61C461A7C00B132F7 /* CHCity.m in Sources */,
 				DD9DF6481C43AC1A001E670B /* CHCityListSystemCell.m in Sources */,
+				E3151CC81C4889C2000C0DCC /* CHButton.m in Sources */,
 				DD75D3711C3F5229001C3A58 /* CHHomeViewController.m in Sources */,
 				DD75D3781C3F6A8B001C3A58 /* NSString+Enhance.m in Sources */,
 				DD9DF64B1C43ACA3001E670B /* CHCityListCustomCell.m in Sources */,
@@ -324,6 +335,7 @@
 				DD9DF63C1C43A423001E670B /* CHCityButton.m in Sources */,
 				E3D5DB9F1C45FDED00B132F7 /* CHCityPickerController.m in Sources */,
 				DD0E69CA1C44DCF700813D76 /* CHCityListHeaderView.m in Sources */,
+				E3151CC51C478E4E000C0DCC /* CHCityNavigationView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

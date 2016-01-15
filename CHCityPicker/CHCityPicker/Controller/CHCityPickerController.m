@@ -10,6 +10,7 @@
 #import "CHCityListSystemCell.h"
 #import "CHCityListCustomCell.h"
 #import "CHCityListHeaderView.h"
+#import "CHCityNavigationView.h"
 #import "CHCityList.h"
 #import "CHCity.h"
 #import "NSString+Enhance.h"
@@ -40,6 +41,7 @@
 @property (nonatomic, strong) UIButton *closeButton;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UISearchBar *searchBar;
+@property (nonatomic, strong) CHCityNavigationView *navigationView;
 @property (nonatomic, assign) BOOL didConstraint;
 
 @property (nonatomic,copy) NSMutableArray<NSString *> *historyCitys;
@@ -85,17 +87,24 @@
     self.view.backgroundColor = kColorCodeWithRGB(0xf0f0f0);
     self.navigationItem.title = @"请选择城市";
     [self setupLayout];
+    NSLog(@"self.view.frame.size.height = %lf", self.view.frame.size.height);
 }
 
 - (void)setupLayout {
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.closeButton];
     [self.view addSubview:self.tableView];
+    [self.view addSubview:self.navigationView];
     [self.view setNeedsUpdateConstraints];
 }
 
 - (void)updateViewConstraints {
     if (!self.didConstraint) {
         [self.tableView autoPinEdgesToSuperviewEdges];
+        
+        [self.navigationView autoSetDimensionsToSize:[self.navigationView calcNavigationViewSizeWithButtonArray:self.navigationView.subviews]];
+        [self.navigationView autoPinEdgeToSuperviewEdge:ALEdgeRight];
+        [self.navigationView autoAlignAxisToSuperviewMarginAxis:ALAxisHorizontal];
+        
         self.didConstraint = YES;
     }
     [super updateViewConstraints];
@@ -217,6 +226,14 @@
         _searchBar.placeholder = @"城市/行政区/拼音";
     }
     return _searchBar;
+}
+
+- (CHCityNavigationView *)navigationView {
+    if (!_navigationView) {
+        _navigationView = [CHCityNavigationView navigationViewWithButtonArray:capitalArray];
+        _navigationView.backgroundColor = kColor(whiteColor);
+    }
+    return _navigationView;
 }
 
 - (NSMutableArray<NSString *> *)historyCitys {

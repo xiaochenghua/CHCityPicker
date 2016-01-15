@@ -12,13 +12,14 @@
 @interface CHCityListCustomCell ()
 {
     NSUInteger defaultCol;
-    CGFloat marginX, marginY;
     CGFloat btnWidth, btnHeight;
     NSArray<NSString *> *cityNames;
     NSMutableArray<CHCityButton *> *cityButtons;
 }
 
 @end
+
+static const CGFloat margin = 12.0f;
 
 @implementation CHCityListCustomCell
 
@@ -33,7 +34,7 @@
         [self initDefaultData];
         [self setupSubViewsWithCityNames:array];
         self.cityListCellType = CHCityListCellTypeCustom;
-        self.rowHeight = (btnHeight + marginY) * ((cityButtons.count - 1) / defaultCol) + marginY * 2 + btnHeight;
+        self.rowHeight = (btnHeight + margin) * ((cityButtons.count - 1) / defaultCol) + margin * 2 + btnHeight;
         self.backgroundColor = kColorCodeWithRGB(0xf0f0f0);
     }
     return self;
@@ -44,8 +45,6 @@
  */
 - (void)initDefaultData {
     defaultCol = 3;
-    marginX = 20.0f;
-    marginY = 12.0f;
     btnWidth = ([[UIScreen mainScreen] applicationFrame].size.width - marginX * 5) / 3;
     btnHeight = 38.0f;
 }
@@ -75,7 +74,7 @@
     NSUInteger col = index % defaultCol;
     
     CGFloat leftInset = (btnWidth + marginX) * col + marginX;
-    CGFloat topInset = (btnHeight + marginY) * row + marginY;
+    CGFloat topInset = (btnHeight + margin) * row + margin;
     
     [btn autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:leftInset];
     [btn autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:topInset];

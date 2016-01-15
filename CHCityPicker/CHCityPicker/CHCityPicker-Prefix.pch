@@ -32,6 +32,7 @@
 
 //  Font
 #define kFont(size)     [UIFont systemFontOfSize:size]
+#define kFontBold(size) [UIFont boldSystemFontOfSize:size]
 
 //  CellIdentifier
 #define kCellIdentifierCustom @"cellIdentifierCustom"
@@ -39,5 +40,15 @@
 
 //  Width
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
+
+//  Margin
+#define marginX 20.0f
+#define marginY 3.0f
+
+//  width/height
+#define buttonWidth  20.0f
+#define buttonHeight 20.0f
+#define navigationWidth  buttonWidth
+#define navigationHeight buttonHeight
 
 #endif /* CHCityPicker_Prefix_pch */

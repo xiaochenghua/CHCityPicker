@@ -28,7 +28,7 @@
 
 - (void)setupTitleLabel {
     [self addSubview:self.titleLabel];
-    [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+    [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:marginX];
     [self.titleLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
 }
 
@@ -40,7 +40,7 @@
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.font = [UIFont boldSystemFontOfSize:15];
+        _titleLabel.font = kFontBold(15);
         _titleLabel.textColor = kColorValueWithRGB(0.41, 0.41, 0.41);
         [_titleLabel sizeToFit];
     }
