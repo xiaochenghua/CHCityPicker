@@ -45,6 +45,7 @@
 
 @property (nonatomic, strong) UIButton *closeButton;
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIView *headerView;
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) CHCityNavigationView *navigationView;
 @property (nonatomic, assign) BOOL didConstraint;
@@ -217,7 +218,7 @@
         _tableView = [[UITableView alloc] init];
         _tableView.dataSource = self;
         _tableView.delegate = self;
-        _tableView.tableHeaderView = self.searchBar;
+        _tableView.tableHeaderView = self.headerView;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         _tableView.separatorColor = kColor(orangeColor);
         _tableView.showsVerticalScrollIndicator = NO;
@@ -225,9 +226,17 @@
     return _tableView;
 }
 
+- (UIView *)headerView {
+    if (!_headerView) {
+        _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 44)];
+        [_headerView addSubview:self.searchBar];
+    }
+    return _headerView;
+}
+
 - (UISearchBar *)searchBar {
     if (!_searchBar) {
-        _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 44)];
+        _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth - marginX, 44)];
         _searchBar.placeholder = @"城市/行政区/拼音";
     }
     return _searchBar;
