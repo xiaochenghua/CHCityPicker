@@ -11,6 +11,7 @@
 #import "CHCityListCustomCell.h"
 #import "CHCityListHeaderView.h"
 #import "CHCityNavigationView.h"
+#import "CHButton.h"
 #import "CHCityList.h"
 #import "CHCity.h"
 #import "NSString+Enhance.h"
@@ -200,6 +201,12 @@
 #pragma mark - Close - Event
 - (void)closeButtonPressed:(UIButton *)btn {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)navigationButtonPressed:(CHButton *)btn {
+    NSUInteger index = [navigationArray indexOfObject:btn.titleLabel.text];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:index];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
 
 #pragma mark - Lazy Loading
