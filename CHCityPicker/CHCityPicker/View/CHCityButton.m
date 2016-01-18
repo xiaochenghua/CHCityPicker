@@ -7,6 +7,7 @@
 //
 
 #import "CHCityButton.h"
+#import "UIButton+Enhance.h"
 
 @implementation CHCityButton
 
@@ -19,6 +20,10 @@
         self.layer.masksToBounds = YES;
         self.layer.borderWidth = 0.5f;
         self.layer.borderColor = kColorCodeWithRGB(0xd0d0d0).CGColor;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+        [self addTarget:[self controller] action:@selector(cityButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+#pragma clang diagnostic pop
     }
     return self;
 }

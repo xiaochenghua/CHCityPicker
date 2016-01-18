@@ -207,10 +207,19 @@
     NSString *capital = capitalArray[indexPath.section - 3];
     CHCity *tmpCity = [cityDict objectForKey:capital][indexPath.row];
     
+    [self selectedCityBy:tmpCity.cityName];
+}
+
+#pragma mark - Pressed - CityButton
+- (void)cityButtonPressed:(UIButton *)btn {
+    [self selectedCityBy:btn.titleLabel.text];
+}
+
+#pragma mark - selected city
+- (void)selectedCityBy:(NSString *)cityName {
     if (self.returnCityNameBlock) {
-        self.returnCityNameBlock(tmpCity.cityName);
+        self.returnCityNameBlock(cityName);
     }
-    
     [self closeButtonPressed:nil];
 }
 

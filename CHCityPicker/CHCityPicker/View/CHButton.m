@@ -7,7 +7,7 @@
 //
 
 #import "CHButton.h"
-#import "CHCityPickerController.h"
+#import "UIButton+Enhance.h"
 
 @implementation CHButton
 
@@ -30,19 +30,6 @@
 #pragma clang diagnostic ignored "-Wundeclared-selector"
     [self addTarget:[self controller] action:@selector(navigationButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 #pragma clang diagnostic pop
-}
-
-/**
- *  找到下一个为CHCityPickerController响应者
- */
-- (CHCityPickerController *)controller {
-    for (UIView *next = [self superview]; next; next = next.superview) {
-        UIResponder *nextResponder = [next nextResponder];
-        if ([nextResponder isMemberOfClass:[CHCityPickerController class]]) {
-            return (CHCityPickerController *)nextResponder;
-        }
-    }
-    return nil;
 }
 
 @end
