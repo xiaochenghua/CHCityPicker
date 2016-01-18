@@ -51,8 +51,10 @@
 @property (nonatomic, strong) CHCityNavigationView *navigationView;
 @property (nonatomic, assign) BOOL didConstraint;
 
-@property (nonatomic,copy) NSMutableArray<NSString *> *historyCitys;
-@property (nonatomic,copy) NSMutableArray<NSString *> *hotCitys;
+@property (nonatomic, copy) NSMutableArray<NSString *> *historyCitys;
+@property (nonatomic, copy) NSMutableArray<NSString *> *hotCitys;
+
+@property (nonatomic, copy) ReturnCityNameBlock returnCityNameBlock;
 
 @end
 
@@ -92,7 +94,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = kColorCodeWithRGB(0xf0f0f0);
-    self.navigationItem.title = @"请选择城市";
     [self setupLayout];
 }
 
@@ -196,6 +197,26 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 25;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section < 3) {
+        return;
+    }
+    
+    NSString *capital = capitalArray[indexPath.section - 3];
+    CHCity *tmpCity = [cityDict objectForKey:capital][indexPath.row];
+    
+    if (self.returnCityNameBlock) {
+        self.returnCityNameBlock(tmpCity.cityName);
+    }
+    
+    [self closeButtonPressed:nil];
+}
+
+#pragma mark - block - set
+- (void)returnCityName:(ReturnCityNameBlock)block {
+    self.returnCityNameBlock = block;
 }
 
 #pragma mark - Close - Event

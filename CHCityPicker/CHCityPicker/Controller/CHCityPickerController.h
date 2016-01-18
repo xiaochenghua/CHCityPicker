@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^ReturnCityNameBlock)(NSString *title);
+
 @interface CHCityPickerController : UIViewController
+
+- (void)returnCityName:(ReturnCityNameBlock)block;
 
 @end

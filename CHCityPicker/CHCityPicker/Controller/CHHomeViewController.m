@@ -18,7 +18,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     [self setupSelectButton];
 }
 
@@ -54,23 +53,16 @@
 
 - (void)selectButtonPressed:(UIButton *)btn {
     CHCityPickerController *viewController = [[CHCityPickerController alloc] init];
+    [viewController returnCityName:^(NSString *title) {
+        [_selectButton setTitle:title forState:UIControlStateNormal];
+    }];
+    viewController.navigationItem.title = [self.selectButton.titleLabel.text isEqualToString:@"请选择城市"] ? self.selectButton.titleLabel.text : [NSString stringWithFormat:@"当前城市-%@", self.selectButton.titleLabel.text];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
