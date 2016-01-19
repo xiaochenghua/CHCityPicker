@@ -41,6 +41,11 @@
      *  导航视图数组，@[@"@", @"&", @"$"] + capitalArray，前三个元素分别表示定位城市、最近访问城市和热门城市
      */
     NSMutableArray *navigationArray;
+    
+    NSMutableArray *cityNames;
+    
+    NSMutableArray *cityPinyins;
+    
 }
 
 @property (nonatomic, strong) UIButton             *closeButton;
@@ -72,7 +77,6 @@ static NSString *reuseIdentifierCustom = @"cellReuseIdentifierCustom";
     NSString *contents = [NSString stringWithFileName:@"cityList" type:@"json"];
     NSError *error = nil;
     cityList = [[CHCityList alloc] initWithString:contents error:&error];
-    
     cityDict = [NSMutableDictionary dictionaryWithCapacity:26];
     capitalArray = [NSMutableArray arrayWithCapacity:26];
     for (int i = 65; i <= 90; i++) {
@@ -89,6 +93,15 @@ static NSString *reuseIdentifierCustom = @"cellReuseIdentifierCustom";
             [cityDict setObject:tmpValue forKey:tmpKey];
             [capitalArray addObject:tmpKey];
         }
+    }
+    
+    cityNames = [NSMutableArray arrayWithCapacity:cityList.citys.count];
+    cityPinyins = [NSMutableArray arrayWithCapacity:cityList.citys.count];
+    
+    for (int i = 0; i < cityList.citys.count; i++) {
+        city = [[CHCity alloc] initWithDictionary:(NSDictionary *)cityList.citys[i] error:&error];
+        [cityNames addObject:city.cityName];
+        [cityPinyins addObject:city.pinyin];
     }
 }
 
