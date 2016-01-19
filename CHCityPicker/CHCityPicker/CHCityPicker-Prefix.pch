@@ -34,10 +34,6 @@
 #define kFont(size)     [UIFont systemFontOfSize:size]
 #define kFontBold(size) [UIFont boldSystemFontOfSize:size]
 
-//  CellIdentifier
-#define kCellIdentifierCustom @"cellIdentifierCustom"
-#define kCellIdentifierSystem @"cellIdentifierSystem"
-
 //  Width
 #define kScreenWidth  [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height

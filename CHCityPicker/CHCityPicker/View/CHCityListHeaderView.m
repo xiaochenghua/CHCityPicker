@@ -9,7 +9,9 @@
 #import "CHCityListHeaderView.h"
 
 @interface CHCityListHeaderView ()
-@property (nonatomic, strong) UILabel     *titleLabel;
+
+@property (nonatomic, strong) UILabel *titleLabel;
+
 @end
 
 @implementation CHCityListHeaderView

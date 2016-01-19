@@ -11,7 +11,7 @@
 
 @interface CHHomeViewController ()
 @property (nonatomic, strong) UIButton *selectButton;
-@property (nonatomic, assign) BOOL      didSetupConstraints;
+@property (nonatomic, assign) BOOL     didSetupConstraints;
 @end
 
 @implementation CHHomeViewController

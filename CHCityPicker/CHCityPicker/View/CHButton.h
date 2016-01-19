@@ -9,5 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface CHButton : UIButton
+/**
+ *  创建CHButton
+ *
+ *  @return CHButton
+ */
 + (instancetype)button;
+
 @end
