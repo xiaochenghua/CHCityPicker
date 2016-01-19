@@ -2,7 +2,7 @@
 //  NSString+Enhance.h
 //  CHCityPicker
 //
-//  Created by APP on 16/1/8.
+//  Created by arnoldxiao on 16/1/8.
 //  Copyright © 2016年 Personal. All rights reserved.
 //
 

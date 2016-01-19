@@ -2,7 +2,7 @@
 //  CHCityListHeaderView.m
 //  CHCityPicker
 //
-//  Created by APP on 16/1/12.
+//  Created by arnoldxiao on 16/1/12.
 //  Copyright © 2016年 Personal. All rights reserved.
 //
 
