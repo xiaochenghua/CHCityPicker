@@ -391,6 +391,7 @@ static NSString *reuseIdentifierCustom = @"cellReuseIdentifierCustom";
         _searchController.dimsBackgroundDuringPresentation = NO;
         _searchController.hidesNavigationBarDuringPresentation = YES;
         self.tableView.tableHeaderView = _searchController.searchBar;
+        self.tableView.tableFooterView = [[UIView alloc] init];
         _searchController.searchBar.placeholder = @"城市/行政区/拼音";
         _searchController.searchBar.delegate = self;
         [_searchController.searchBar sizeToFit];
