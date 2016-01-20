@@ -15,17 +15,12 @@
 #import "CHCity.h"
 #import "NSString+Enhance.h"
 
-@interface CHCityPickerController () <UITableViewDataSource, UITableViewDelegate>
+@interface CHCityPickerController () <UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate>
 {
     /**
-     *  CHCityList实体，包含一个citys属性，NSArray<CHCity *> *
+     *  是否已经布局
      */
-    CHCityList *cityList;
-    
-    /**
-     *  CHCity实体，包含cityID/cityName/pinyin三个属性
-     */
-    CHCity *city;
+    BOOL didConstraint;
     
     /**
      *  城市字典，key为A-Z字母组合(不排除个别字母不存在)，value为城市拼音首字母大写为key的城市实体组成的数组
@@ -42,23 +37,34 @@
      */
     NSMutableArray *navigationArray;
     
-    NSMutableArray *cityNames;
+    /**
+     *  城市名集合
+     */
+    NSMutableArray<NSString *> *cityNames;
     
-    NSMutableArray *cityPinyins;
+    /**
+     *  城市拼音集合
+     */
+    NSMutableArray<NSString *> *cityPinyins;
     
+    /**
+     *  搜索关键字
+     */
+    NSString *searchWords;
 }
 
 @property (nonatomic, strong) UIButton             *closeButton;
 @property (nonatomic, strong) UITableView          *tableView;
-@property (nonatomic, strong) UIView               *headerView;
-@property (nonatomic, strong) UISearchBar          *searchBar;
+
+@property (nonatomic, strong) UISearchController   *searchController;
+@property (nonatomic, strong) NSMutableArray       *searchResultList;
+@property (nonatomic, strong) NSLayoutConstraint   *constraint;
+@property (nonatomic, copy  ) ReturnCityNameBlock  returnCityNameBlock;
+
 @property (nonatomic, strong) CHCityNavigationView *navigationView;
-@property (nonatomic, assign) BOOL                 didConstraint;
 
 @property (nonatomic, copy  ) NSMutableArray<NSString *> *historyCitys;
 @property (nonatomic, copy  ) NSMutableArray<NSString *> *hotCitys;
-
-@property (nonatomic, copy  ) ReturnCityNameBlock  returnCityNameBlock;
 
 @end
 
@@ -76,14 +82,14 @@ static NSString *reuseIdentifierCustom = @"cellReuseIdentifierCustom";
 - (void)initCityData {
     NSString *contents = [NSString stringWithFileName:@"cityList" type:@"json"];
     NSError *error = nil;
-    cityList = [[CHCityList alloc] initWithString:contents error:&error];
+    CHCityList *cityList = [[CHCityList alloc] initWithString:contents error:&error];
     cityDict = [NSMutableDictionary dictionaryWithCapacity:26];
     capitalArray = [NSMutableArray arrayWithCapacity:26];
     for (int i = 65; i <= 90; i++) {
         NSString *tmpKey = [NSString stringwithInt:i needUpper:YES];
         NSMutableArray *tmpValue = [NSMutableArray array];
         for (int j = 0; j < cityList.citys.count; j++) {
-            city = [[CHCity alloc] initWithDictionary:(NSDictionary *)cityList.citys[j] error:&error];
+            CHCity *city = [[CHCity alloc] initWithDictionary:(NSDictionary *)cityList.citys[j] error:&error];
             NSString *cityCapital = [city.pinyin capitalNeedUpper:YES];
             if ([cityCapital isEqualToString:tmpKey]) {
                 [tmpValue addObject:city];
@@ -99,7 +105,7 @@ static NSString *reuseIdentifierCustom = @"cellReuseIdentifierCustom";
     cityPinyins = [NSMutableArray arrayWithCapacity:cityList.citys.count];
     
     for (int i = 0; i < cityList.citys.count; i++) {
-        city = [[CHCity alloc] initWithDictionary:(NSDictionary *)cityList.citys[i] error:&error];
+        CHCity *city = [[CHCity alloc] initWithDictionary:(NSDictionary *)cityList.citys[i] error:&error];
         [cityNames addObject:city.cityName];
         [cityPinyins addObject:city.pinyin];
     }
@@ -119,134 +125,209 @@ static NSString *reuseIdentifierCustom = @"cellReuseIdentifierCustom";
 }
 
 - (void)updateViewConstraints {
-    if (!self.didConstraint) {
-        [self.tableView autoPinEdgesToSuperviewEdges];
+    if (!didConstraint) {
+        self.constraint = [[self.tableView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 0, 0, marginX)] lastObject];
         
         [self.navigationView autoSetDimensionsToSize:CGSizeMake(navigationWidth, self.view.frame.size.height - 64)];
         [self.navigationView autoPinEdgeToSuperviewEdge:ALEdgeRight];
         [self.navigationView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:64];
         
-        self.didConstraint = YES;
+        didConstraint = YES;
     }
+    
     [super updateViewConstraints];
 }
 
 #pragma mark  - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3 + capitalArray.count;
+    if (self.searchController.active) {
+        return 1;
+    } else {
+        return 3 + capitalArray.count;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section < 3) {
-        return 1;
-    }
     
-    NSString *capital = capitalArray[section - 3];
-    return [[cityDict objectForKey:capital] count];
+    if (self.searchController.active) {
+        return self.searchResultList.count;
+    } else {
+        if (section < 3) {
+            return 1;
+        }
+        
+        NSString *capital = capitalArray[section - 3];
+        return [[cityDict objectForKey:capital] count];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section >= 3) {
-        static NSString *reuseIdentifierSystem = @"cellReuseIdentifierSystem";
+    static NSString *reuseIdentifierSystem = @"cellReuseIdentifierSystem";
+    if (self.searchController.active) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSystem];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSystem];
         }
-        NSString *capital = capitalArray[indexPath.section - 3];
-        CHCity *tmpCity = [cityDict objectForKey:capital][indexPath.row];
-        cell.textLabel.text = tmpCity.cityName;
+        NSString *resultString = self.searchResultList[indexPath.row];
+        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:resultString];
+        NSRange range = [resultString rangeOfString:searchWords];
+        [attrString addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:range];
+        cell.textLabel.attributedText = attrString;
+        return cell;
+    } else {
+        if (indexPath.section >= 3) {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSystem];
+            if (!cell) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSystem];
+            }
+            NSString *capital = capitalArray[indexPath.section - 3];
+            CHCity *tmpCity = [cityDict objectForKey:capital][indexPath.row];
+            cell.textLabel.text = tmpCity.cityName;
+            return cell;
+        }
+        
+        NSArray<NSString *> *array = nil;
+        switch (indexPath.section) {
+            case 0:
+                array = @[@"深圳"];
+                break;
+                
+            case 1:
+                array = self.historyCitys;
+                break;
+                
+            case 2:
+                array = self.hotCitys;
+                break;
+        }
+        
+        CHCityListCell *cell = (CHCityListCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifierCustom];
+        if (!cell) {
+            cell = [[CHCityListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierCustom cityNames:array];
+        }
+        [cell configTitleForCellSubView];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
-    
-    NSArray<NSString *> *array = nil;
-    switch (indexPath.section) {
-        case 0:
-            array = @[@"深圳"];
-            break;
-            
-        case 1:
-            array = self.historyCitys;
-            break;
-            
-        case 2:
-            array = self.hotCitys;
-            break;
-    }
-    
-    CHCityListCell *cell = (CHCityListCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifierCustom];
-    if (!cell) {
-        cell = [[CHCityListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierCustom cityNames:array];
-    }
-    [cell configTitleForCellSubView];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    return cell;
 }
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section >= 3) {
+    if (self.searchController.active) {
         return 44;
+    } else {
+        if (indexPath.section >= 3) {
+            return 44;
+        }
+        
+        NSArray<NSString *> *array = nil;
+        switch (indexPath.section) {
+            case 0:
+                array = @[@"深圳"];
+                break;
+                
+            case 1:
+                array = self.historyCitys;
+                break;
+                
+            case 2:
+                array = self.hotCitys;
+                break;
+        }
+        
+        CHCityListCell *cell = (CHCityListCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifierCustom];
+        if (!cell) {
+            cell = [[CHCityListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierCustom cityNames:array];
+        }
+        return cell.rowHeight;
     }
-    
-    NSArray<NSString *> *array = nil;
-    switch (indexPath.section) {
-        case 0:
-            array = @[@"深圳"];
-            break;
-            
-        case 1:
-            array = self.historyCitys;
-            break;
-            
-        case 2:
-            array = self.hotCitys;
-            break;
-    }
-    
-    CHCityListCell *cell = (CHCityListCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifierCustom];
-    if (!cell) {
-        cell = [[CHCityListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierCustom cityNames:array];
-    }
-    return cell.rowHeight;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    NSString *title;
-    switch (section) {
-        case 0:
-            title = @"定位城市";
-            break;
-            
-        case 1:
-            title = @"最近访问城市";
-            break;
-            
-        case 2:
-            title = @"热门城市";
-            break;
-            
-        default:
-            title = capitalArray[section - 3];
-            break;
+    if (self.searchController.active) {
+        return nil;
+    } else {
+        NSString *title;
+        switch (section) {
+            case 0:
+                title = @"定位城市";
+                break;
+                
+            case 1:
+                title = @"最近访问城市";
+                break;
+                
+            case 2:
+                title = @"热门城市";
+                break;
+                
+            default:
+                title = capitalArray[section - 3];
+                break;
+        }
+        CHCityListHeaderView *view = [CHCityListHeaderView headerView];
+        [view configTitle:title];
+        return view;
     }
-    CHCityListHeaderView *view = [CHCityListHeaderView headerView];
-    [view configTitle:title];
-    return view;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 25;
+    if (self.searchController.active) {
+        return 0;
+    } else {
+        return 25;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section < 3) {
-        return;
+    if (self.searchController.active) {
+        NSString *cityName = self.searchResultList[indexPath.row];
+        [self selectedCityBy:cityName];
+        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        if (indexPath.section < 3) {
+            return;
+        }
+        
+        NSString *capital = capitalArray[indexPath.section - 3];
+        CHCity *tmpCity = [cityDict objectForKey:capital][indexPath.row];
+        
+        [self selectedCityBy:tmpCity.cityName];
+    }
+}
+
+#pragma mark - UISearchResultsUpdating
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    searchWords = self.searchController.searchBar.text;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", searchWords];
+    self.searchResultList = [NSMutableArray arrayWithArray:[cityNames filteredArrayUsingPredicate:predicate]];
+    [self.tableView reloadData];
+}
+
+#pragma mark - UISearchBarDelegate
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    self.navigationView.hidden = YES;
+    
+    searchBar.showsCancelButton = YES;
+    for (id obj in searchBar.subviews[0].subviews) {
+        if ([obj isKindOfClass:[UIButton class]]) {
+            UIButton *btn = (UIButton *)obj;
+            [btn setTitle:@"取消" forState:UIControlStateNormal];
+            [btn setTitleColor:kColor(orangeColor) forState:UIControlStateNormal];
+        }
     }
     
-    NSString *capital = capitalArray[indexPath.section - 3];
-    CHCity *tmpCity = [cityDict objectForKey:capital][indexPath.row];
+    //  更新约束
+    self.constraint.constant = 0.0f;
+    [self.view setNeedsUpdateConstraints];
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
+    self.navigationView.hidden = NO;
     
-    [self selectedCityBy:tmpCity.cityName];
+    //  更新约束
+    self.constraint.constant = -marginX;
+    [self.view setNeedsUpdateConstraints];
 }
 
 #pragma mark - Pressed - CityButton
@@ -254,7 +335,7 @@ static NSString *reuseIdentifierCustom = @"cellReuseIdentifierCustom";
     [self selectedCityBy:btn.titleLabel.text];
 }
 
-#pragma mark - selected city
+#pragma mark - Selected city
 - (void)selectedCityBy:(NSString *)cityName {
     if (self.returnCityNameBlock) {
         self.returnCityNameBlock(cityName);
@@ -262,7 +343,7 @@ static NSString *reuseIdentifierCustom = @"cellReuseIdentifierCustom";
     [self closeButtonPressed:nil];
 }
 
-#pragma mark - block - set
+#pragma mark - Block - Set
 - (void)returnCityName:(ReturnCityNameBlock)block {
     self.returnCityNameBlock = block;
 }
@@ -294,28 +375,32 @@ static NSString *reuseIdentifierCustom = @"cellReuseIdentifierCustom";
         _tableView = [[UITableView alloc] init];
         _tableView.dataSource = self;
         _tableView.delegate = self;
-        _tableView.tableHeaderView = self.headerView;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-        _tableView.separatorColor = kColor(orangeColor);
+        _tableView.separatorColor = kColorCodeWithRGB(0xFFD1A4);
         _tableView.showsVerticalScrollIndicator = NO;
     }
     return _tableView;
 }
 
-- (UIView *)headerView {
-    if (!_headerView) {
-        _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 44)];
-        [_headerView addSubview:self.searchBar];
+- (UISearchController *)searchController {
+    if (!_searchController) {
+        _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+        _searchController.searchResultsUpdater = self;
+        _searchController.dimsBackgroundDuringPresentation = NO;
+        _searchController.hidesNavigationBarDuringPresentation = YES;
+        self.tableView.tableHeaderView = _searchController.searchBar;
+        _searchController.searchBar.placeholder = @"城市/行政区/拼音";
+        _searchController.searchBar.delegate = self;
+        [_searchController.searchBar sizeToFit];
     }
-    return _headerView;
+    return _searchController;
 }
 
-- (UISearchBar *)searchBar {
-    if (!_searchBar) {
-        _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth - marginX, 44)];
-        _searchBar.placeholder = @"城市/行政区/拼音";
+- (NSLayoutConstraint *)constraint {
+    if (!_constraint) {
+        _constraint = [[NSLayoutConstraint alloc] init];
     }
-    return _searchBar;
+    return _constraint;
 }
 
 - (CHCityNavigationView *)navigationView {
@@ -342,6 +427,7 @@ static NSString *reuseIdentifierCustom = @"cellReuseIdentifierCustom";
     return _hotCitys;
 }
 
+#pragma mark - ReceiveMemoryWarning
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }

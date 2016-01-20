@@ -22,7 +22,7 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.backgroundColor = kColor(grayColor);
+        self.backgroundColor = kColorCodeWithRGB(0xE0E0E0);
         [self setupTitleLabel];
     }
     return self;
@@ -43,7 +43,8 @@
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = kFontBold(15);
-        _titleLabel.textColor = kColorValueWithRGB(0.41, 0.41, 0.41);
+//        _titleLabel.textColor = kColorValueWithRGB(0.41, 0.41, 0.41);
+        _titleLabel.textColor = kColorCodeWithRGB(0x6C6C6C);
         [_titleLabel sizeToFit];
     }
     return _titleLabel;

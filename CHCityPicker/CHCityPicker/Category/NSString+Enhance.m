@@ -16,13 +16,11 @@
     return [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
 }
 
-
 + (NSString *)stringwithInt:(int)number needUpper:(BOOL)needUpper {
     const unichar c = number;
     NSString *tmpString = [self stringWithCharacters:&c length:1];
     return needUpper ? [tmpString uppercaseString] : [tmpString lowercaseString];
 }
-
 
 - (NSString *)capitalNeedUpper:(BOOL)needUpper {
     NSUInteger index = 0;
