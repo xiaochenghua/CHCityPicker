@@ -51,13 +51,15 @@
      *  搜索关键字
      */
     NSString *searchWords;
+    
+    NSMutableArray       *searchResultList;
 }
 
 @property (nonatomic, strong) UIButton             *closeButton;
 @property (nonatomic, strong) UITableView          *tableView;
 
 @property (nonatomic, strong) UISearchController   *searchController;
-@property (nonatomic, strong) NSMutableArray       *searchResultList;
+//@property (nonatomic, strong) NSMutableArray       *searchResultList;
 @property (nonatomic, strong) NSLayoutConstraint   *constraint;
 @property (nonatomic, copy  ) ReturnCityNameBlock  returnCityNameBlock;
 
@@ -150,7 +152,7 @@ static NSString *reuseIdentifierCustom = @"cellReuseIdentifierCustom";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     if (self.searchController.active) {
-        return self.searchResultList.count;
+        return searchResultList.count;
     } else {
         if (section < 3) {
             return 1;
@@ -168,7 +170,7 @@ static NSString *reuseIdentifierCustom = @"cellReuseIdentifierCustom";
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSystem];
         }
-        NSString *resultString = self.searchResultList[indexPath.row];
+        NSString *resultString = searchResultList[indexPath.row];
         NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:resultString];
         NSRange range = [resultString rangeOfString:searchWords];
         [attrString addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:range];
@@ -281,7 +283,7 @@ static NSString *reuseIdentifierCustom = @"cellReuseIdentifierCustom";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.searchController.active) {
-        NSString *cityName = self.searchResultList[indexPath.row];
+        NSString *cityName = searchResultList[indexPath.row];
         [self selectedCityBy:cityName];
         [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     } else {
@@ -300,7 +302,7 @@ static NSString *reuseIdentifierCustom = @"cellReuseIdentifierCustom";
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     searchWords = self.searchController.searchBar.text;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", searchWords];
-    self.searchResultList = [NSMutableArray arrayWithArray:[cityNames filteredArrayUsingPredicate:predicate]];
+    searchResultList = [NSMutableArray arrayWithArray:[cityNames filteredArrayUsingPredicate:predicate]];
     [self.tableView reloadData];
 }
 
