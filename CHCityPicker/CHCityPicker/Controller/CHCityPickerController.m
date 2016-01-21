@@ -93,16 +93,19 @@
 - (void)initCityData {
     NSString *contents = [NSString stringWithFileName:@"cityList" type:@"json"];
     NSError *error = nil;
+    
     CHCityList *cityList = [[CHCityList alloc] initWithString:contents error:&error];
+    
     cityDict = [NSMutableDictionary dictionaryWithCapacity:26];
     capitalArray = [NSMutableArray arrayWithCapacity:26];
     cityNameAndPinyin = [NSMutableDictionary dictionaryWithCapacity:cityList.citys.count];
+    
     for (int i = 65; i <= 90; i++) {
-        NSString *tmpKey = [NSString stringwithInt:i needUpper:YES];
+        NSString *tmpKey = [NSString stringwithInt:i];
         NSMutableArray *tmpValue = [NSMutableArray array];
         for (int j = 0; j < cityList.citys.count; j++) {
             CHCity *city = [[CHCity alloc] initWithDictionary:(NSDictionary *)cityList.citys[j] error:&error];
-            NSString *cityCapital = [city.pinyin capitalNeedUpper:YES];
+            NSString *cityCapital = [city.pinyin capital];
             if ([cityCapital isEqualToString:tmpKey]) {
                 [tmpValue addObject:city];
                 [cityNameAndPinyin setObject:city.cityName forKey:city.pinyin];
