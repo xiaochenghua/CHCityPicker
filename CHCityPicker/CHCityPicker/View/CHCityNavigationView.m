@@ -16,7 +16,7 @@
 }
 @end
 
-static const CGFloat topInset = 75.0f;
+static const CGFloat topInset = 55.0f ;
 
 @implementation CHCityNavigationView
 
@@ -32,14 +32,14 @@ static const CGFloat topInset = 75.0f;
 }
 
 - (void)setupLayoutWithButtonArray:(NSArray *)array {
-    margin = (kScreenHeight - 64 - array.count * buttonHeight - 2 * topInset) / (array.count - 1);
+    margin = (kScreenHeight - 64 - array.count * buttonHeight - 2 * topInset * kAutoScaleY) / (array.count - 1);
     for (int i = 0; i < array.count; i++) {
         CHButton *capitalButton = [CHButton button];
         
         [self addSubview:capitalButton];
         
         [capitalButton autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-        [capitalButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:topInset + (buttonHeight + margin) * i];
+        [capitalButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:topInset * kAutoScaleY + (buttonHeight + margin) * i];
         [capitalButton autoSetDimensionsToSize:CGSizeMake(buttonWidth, buttonHeight)];
                 
         [capitalButton setTitle:array[i] forState:UIControlStateNormal];

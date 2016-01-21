@@ -46,7 +46,7 @@ static const CGFloat margin = 12.0f;
 - (void)initSomeDefaultData {
     defaultCol = 3;
     btnWidth   = ([[UIScreen mainScreen] applicationFrame].size.width - marginX * 5) / 3;
-    btnHeight  = 38.0f;
+    btnHeight  = 30.0f;
 }
 
 - (void)setupLayoutWithButton:(UIButton *)btn index:(NSUInteger)index {
