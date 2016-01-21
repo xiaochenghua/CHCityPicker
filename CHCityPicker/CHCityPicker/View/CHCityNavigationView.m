@@ -16,7 +16,7 @@
 }
 @end
 
-static const CGFloat topInset = 55.0f ;
+static const CGFloat topInset = 48.0f ;
 
 @implementation CHCityNavigationView
 
