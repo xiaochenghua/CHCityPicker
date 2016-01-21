@@ -9,9 +9,8 @@
 #import "CHCityPickerController.h"
 #import "CHCityListCell.h"
 #import "CHCityListHeaderView.h"
-#import "CHCityNavigationView.h"
+#import "CHCityIndexView.h"
 #import "CHButton.h"
-#import "CHCityList.h"
 #import "CHCity.h"
 #import "NSString+Enhance.h"
 
@@ -25,17 +24,17 @@
     /**
      *  城市字典，key为A-Z字母组合(不排除个别字母不存在)，value为城市拼音首字母大写为key的城市实体组成的数组
      */
-    NSMutableDictionary *cityDict;
+    NSMutableDictionary *formatCityDict;
     
     /**
      *  A-Z的字母组合，部分字母没有！！
      */
-    NSMutableArray *capitalArray;
+    NSMutableArray *initialsArray;
     
     /**
      *  导航视图数组，@[@"@", @"&", @"$"] + capitalArray，前三个元素分别表示定位城市、最近访问城市和热门城市
      */
-    NSMutableArray *navigationArray;
+    NSMutableArray *indexArray;
     
     /**
      *  城市名集合
@@ -55,12 +54,12 @@
     /**
      *  搜索结果集合
      */
-    NSMutableArray       *searchResultList;
+    NSMutableArray *searchResultList;
     
     /**
-     *  保存城市名和拼音的字典，拼音作为key，城市名作为value
+     *  城市名和拼音的字典，拼音作为key，城市名作为value
      */
-    NSMutableDictionary *cityNameAndPinyin;
+    NSMutableDictionary *cityMappingDict;
 }
 
 @property (nonatomic, strong) UIButton             *closeButton;
@@ -70,7 +69,7 @@
 @property (nonatomic, strong) NSLayoutConstraint   *constraint;
 @property (nonatomic, copy  ) ReturnCityNameBlock  returnCityNameBlock;
 
-@property (nonatomic, strong) CHCityNavigationView *navigationView;
+@property (nonatomic, strong) CHCityIndexView *indexView;
 
 @property (nonatomic, copy  ) NSMutableArray<NSString *> *historyCitys;
 @property (nonatomic, copy  ) NSMutableArray<NSString *> *hotCitys;
@@ -81,9 +80,8 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-//        [self initCityData];
+        //  大幅减少初始化耗时，提高性能
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"currentThread -> %@", [NSThread currentThread]);
             [self initCityData];
         });
     }
@@ -91,37 +89,47 @@
 }
 
 - (void)initCityData {
-    NSString *contents = [NSString stringWithFileName:@"cityList" type:@"json"];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"cityList" ofType:@"plist"];
+    
+    NSDictionary *originalCityDict = [NSDictionary dictionaryWithContentsOfFile:path];
+    NSArray *originalCityArray = [originalCityDict objectForKey:[originalCityDict allKeys].firstObject];
+    
+    formatCityDict = [NSMutableDictionary dictionaryWithCapacity:26];
+    initialsArray = [NSMutableArray arrayWithCapacity:26];
+    cityMappingDict = [NSMutableDictionary dictionaryWithCapacity:originalCityArray.count];
+    
     NSError *error = nil;
-    
-    CHCityList *cityList = [[CHCityList alloc] initWithString:contents error:&error];
-    
-    cityDict = [NSMutableDictionary dictionaryWithCapacity:26];
-    capitalArray = [NSMutableArray arrayWithCapacity:26];
-    cityNameAndPinyin = [NSMutableDictionary dictionaryWithCapacity:cityList.citys.count];
+    NSMutableArray<NSNumber *> *tmpArray = [NSMutableArray arrayWithCapacity:originalCityArray.count];
     
     for (int i = 65; i <= 90; i++) {
+        
         NSString *tmpKey = [NSString stringwithInt:i];
-        NSMutableArray *tmpValue = [NSMutableArray array];
-        for (int j = 0; j < cityList.citys.count; j++) {
-            CHCity *city = [[CHCity alloc] initWithDictionary:(NSDictionary *)cityList.citys[j] error:&error];
+        NSMutableArray<CHCity *> *tmpValue = [NSMutableArray array];
+        
+        for (int j = 0; j < originalCityArray.count; j++) {
+            if ([tmpArray containsObject:[NSNumber numberWithInt:j]]) {
+                continue;
+            }
+            CHCity *city = [[CHCity alloc] initWithDictionary:originalCityArray[j] error:&error];
             NSString *cityCapital = [city.pinyin capital];
             if ([cityCapital isEqualToString:tmpKey]) {
                 [tmpValue addObject:city];
-                [cityNameAndPinyin setObject:city.cityName forKey:city.pinyin];
+                [cityMappingDict setObject:city.cityName forKey:city.pinyin];
+                [tmpArray addObject:[NSNumber numberWithInt:j]];
             }
         }
+        
         if (tmpValue.count) {
-            [cityDict setObject:tmpValue forKey:tmpKey];
-            [capitalArray addObject:tmpKey];
+            [formatCityDict setObject:tmpValue forKey:tmpKey];
+            [initialsArray addObject:tmpKey];
         }
     }
     
-    cityNames = [NSMutableArray arrayWithCapacity:cityList.citys.count];
-    cityPinyins = [NSMutableArray arrayWithCapacity:cityList.citys.count];
+    cityNames = [NSMutableArray arrayWithCapacity:originalCityArray.count];
+    cityPinyins = [NSMutableArray arrayWithCapacity:originalCityArray.count];
     
-    for (int i = 0; i < cityList.citys.count; i++) {
-        CHCity *city = [[CHCity alloc] initWithDictionary:(NSDictionary *)cityList.citys[i] error:&error];
+    for (int i = 0; i < originalCityArray.count; i++) {
+        CHCity *city = [[CHCity alloc] initWithDictionary:originalCityArray[i] error:&error];
         [cityNames addObject:city.cityName];
         [cityPinyins addObject:city.pinyin];
     }
@@ -136,7 +144,7 @@
 - (void)setupLayout {
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.closeButton];
     [self.view addSubview:self.tableView];
-    [self.view addSubview:self.navigationView];
+    [self.view addSubview:self.indexView];
     [self.view setNeedsUpdateConstraints];
 }
 
@@ -144,9 +152,9 @@
     if (!didConstraint) {
         self.constraint = [[self.tableView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 0, 0, marginX)] lastObject];
         
-        [self.navigationView autoSetDimensionsToSize:CGSizeMake(navigationWidth, self.view.frame.size.height - 64)];
-        [self.navigationView autoPinEdgeToSuperviewEdge:ALEdgeRight];
-        [self.navigationView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:64];
+        [self.indexView autoSetDimensionsToSize:CGSizeMake(navigationWidth, self.view.frame.size.height - 64)];
+        [self.indexView autoPinEdgeToSuperviewEdge:ALEdgeRight];
+        [self.indexView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:64];
         
         didConstraint = YES;
     }
@@ -159,7 +167,7 @@
     if (self.searchController.active) {
         return 1;
     } else {
-        return 3 + capitalArray.count;
+        return 3 + initialsArray.count;
     }
 }
 
@@ -172,15 +180,15 @@
             return 1;
         }
         
-        NSString *capital = capitalArray[section - 3];
-        return [[cityDict objectForKey:capital] count];
+        NSString *capital = initialsArray[section - 3];
+        return [[formatCityDict objectForKey:capital] count];
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *reuseIdentifierSystem = @"cellReuseIdentifierSystem";
     static NSString *reuseIdentifierCustom = @"cellReuseIdentifierCustom";
-
+    
     if (self.searchController.active) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSystem];
         if (!cell) {
@@ -198,8 +206,8 @@
             if (!cell) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSystem];
             }
-            NSString *capital = capitalArray[indexPath.section - 3];
-            CHCity *tmpCity = [cityDict objectForKey:capital][indexPath.row];
+            NSString *capital = initialsArray[indexPath.section - 3];
+            CHCity *tmpCity = [formatCityDict objectForKey:capital][indexPath.row];
             cell.textLabel.text = tmpCity.cityName;
             return cell;
         }
@@ -270,7 +278,7 @@
                 break;
                 
             default:
-                title = capitalArray[section - 3];
+                title = initialsArray[section - 3];
                 break;
         }
         CHCityListHeaderView *view = [CHCityListHeaderView headerView];
@@ -297,8 +305,8 @@
             return;
         }
         
-        NSString *capital = capitalArray[indexPath.section - 3];
-        CHCity *tmpCity = [cityDict objectForKey:capital][indexPath.row];
+        NSString *capital = initialsArray[indexPath.section - 3];
+        CHCity *tmpCity = [formatCityDict objectForKey:capital][indexPath.row];
         
         [self selectedCityBy:tmpCity.cityName];
     }
@@ -309,15 +317,15 @@
     searchWords = self.searchController.searchBar.text;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", searchWords];
     searchResultList = [NSMutableArray arrayWithArray:[cityNames filteredArrayUsingPredicate:predicate]];
-    NSArray *searchPinyinList = [NSArray arrayWithArray:[[self ignoreCharacter:cityPinyins] filteredArrayUsingPredicate:predicate]];
-    [self processPinyinSearchWithArray:searchPinyinList];
+    NSArray *searchResultPinyinList = [NSArray arrayWithArray:[[self ignoreCharacter:cityPinyins] filteredArrayUsingPredicate:predicate]];
+    [self processPinyinSearchWithArray:searchResultPinyinList];
     [self.tableView reloadData];
 }
 
 #pragma mark - Pinyin Process
 - (void)processPinyinSearchWithArray:(NSArray *)array {
     for (int i = 0; i < array.count; i++) {
-        NSString *cityName = [cityNameAndPinyin objectForKey:array[i]];
+        NSString *cityName = [cityMappingDict objectForKey:array[i]];
         if (![searchResultList containsObject:cityName]) {
             [searchResultList addObject:cityName];
         }
@@ -339,7 +347,7 @@
 
 #pragma mark - UISearchBarDelegate
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-    self.navigationView.hidden = YES;
+    self.indexView.hidden = YES;
     
     searchBar.showsCancelButton = YES;
     for (id obj in searchBar.subviews[0].subviews) {
@@ -356,7 +364,7 @@
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
-    self.navigationView.hidden = NO;
+    self.indexView.hidden = NO;
     
     //  更新约束
     self.constraint.constant = -marginX;
@@ -393,7 +401,7 @@
 
 #pragma mark - NavigationButtonPressed
 - (void)navigationButtonPressed:(CHButton *)btn {
-    NSUInteger index = [navigationArray indexOfObject:btn.titleLabel.text];
+    NSUInteger index = [indexArray indexOfObject:btn.titleLabel.text];
     if (index == 0) {
         [self.tableView setContentOffset:CGPointMake(0, -64)];
     } else {
@@ -449,14 +457,14 @@
     return _constraint;
 }
 
-- (CHCityNavigationView *)navigationView {
-    if (!_navigationView) {
-        navigationArray = [NSMutableArray arrayWithArray:@[@"^", @"@", @"&", @"$"]];
-        [navigationArray addObjectsFromArray:capitalArray];
-        _navigationView = [CHCityNavigationView navigationViewWithButtonArray:navigationArray];
-        _navigationView.backgroundColor = kColor(whiteColor);
+- (CHCityIndexView *)indexView {
+    if (!_indexView) {
+        indexArray = [NSMutableArray arrayWithArray:@[@"^", @"@", @"&", @"$"]];
+        [indexArray addObjectsFromArray:initialsArray];
+        _indexView = [CHCityIndexView indexViewWithButtonArray:indexArray];
+        _indexView.backgroundColor = kColor(whiteColor);
     }
-    return _navigationView;
+    return _indexView;
 }
 
 - (NSMutableArray<NSString *> *)historyCitys {

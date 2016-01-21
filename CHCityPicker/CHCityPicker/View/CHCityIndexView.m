@@ -1,26 +1,26 @@
 //
-//  CHCityNavigationView.m
+//  CHCityIndexView.m
 //  CHCityPicker
 //
 //  Created by arnoldxiao on 16/1/14.
 //  Copyright © 2016年 Personal. All rights reserved.
 //
 
-#import "CHCityNavigationView.h"
+#import "CHCityIndexView.h"
 #import "CHButton.h"
 #import "NSString+Enhance.h"
 
-@interface CHCityNavigationView ()
+@interface CHCityIndexView ()
 {
     CGFloat margin;
 }
 @end
 
-static const CGFloat topInset = 48.0f ;
+static const CGFloat topInset = 48.0f;
 
-@implementation CHCityNavigationView
+@implementation CHCityIndexView
 
-+ (instancetype)navigationViewWithButtonArray:(NSArray *)array {
++ (instancetype)indexViewWithButtonArray:(NSArray *)array {
     return [[self alloc] initWithButtonArray:array];
 }
 

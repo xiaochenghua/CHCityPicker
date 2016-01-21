@@ -10,12 +10,6 @@
 
 @implementation NSString (Enhance)
 
-+ (NSString *)stringWithFileName:(NSString *)fileName type:(NSString *)type {
-    NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:type];
-    NSError *error = nil;
-    return [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
-}
-
 + (NSString *)stringwithInt:(int)number {
     return [self stringwithInt:number needUpper:YES];
 }

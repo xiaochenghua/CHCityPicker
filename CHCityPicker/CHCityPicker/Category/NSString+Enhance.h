@@ -11,16 +11,6 @@
 @interface NSString (Enhance)
 
 /**
- *  根据JSON文件名，返回文件内容
- *
- *  @param fileName 文件名
- *  @param type     文件扩展名，@"json"
- *
- *  @return 文件内容
- */
-+ (NSString *)stringWithFileName:(NSString *)fileName type:(NSString *)type;
-
-/**
  *  ASCII码数值 --> 字符 --> 字符串，默认大写
  *
  *  @param number    ASCII码数值

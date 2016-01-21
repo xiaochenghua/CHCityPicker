@@ -1,5 +1,5 @@
 //
-//  CHCityNavigationView.h
+//  CHCityIndexView.h
 //  CHCityPicker
 //
 //  Created by arnoldxiao on 16/1/14.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CHCityNavigationView : UIView
+@interface CHCityIndexView : UIView
 /**
  *  类方法 - 初始化导航视图
  *
@@ -16,6 +16,6 @@
  *
  *  @return 导航视图
  */
-+ (instancetype)navigationViewWithButtonArray:(NSArray *)array;
++ (instancetype)indexViewWithButtonArray:(NSArray *)array;
 
 @end
