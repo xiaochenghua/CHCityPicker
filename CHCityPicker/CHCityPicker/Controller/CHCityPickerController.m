@@ -324,6 +324,11 @@
     [self.view setNeedsUpdateConstraints];
 }
 
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    NSLog(@"scrollView.contentOffset.y -> %lf", scrollView.contentOffset.y);
+}
+
 #pragma mark - Pressed - CityButton
 - (void)cityButtonPressed:(UIButton *)btn {
     [self selectedCityBy:btn.titleLabel.text];
@@ -342,15 +347,21 @@
     self.returnCityNameBlock = block;
 }
 
-#pragma mark - Close - Event
+#pragma mark - CloseButtonPressed
 - (void)closeButtonPressed:(UIButton *)btn {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - NavigationButtonPressed
 - (void)navigationButtonPressed:(CHButton *)btn {
     NSUInteger index = [navigationArray indexOfObject:btn.titleLabel.text];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:index];
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    if (index == 0) {
+        [self.tableView setContentOffset:CGPointMake(0, -64)];
+    } else {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:index - 1];
+        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        NSLog(@"contentOffset.y --> %lf", self.tableView.contentOffset.y);
+    }
 }
 
 #pragma mark - Lazy Loading
@@ -370,8 +381,9 @@
         _tableView.dataSource = self;
         _tableView.delegate = self;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-        _tableView.separatorColor = kColorCodeWithRGB(0xFFD1A4);
+        _tableView.separatorColor = kColorCodeWithRGB(0xffd1a4);
         _tableView.showsVerticalScrollIndicator = NO;
+        _tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     }
     return _tableView;
 }
@@ -400,7 +412,7 @@
 
 - (CHCityNavigationView *)navigationView {
     if (!_navigationView) {
-        navigationArray = [NSMutableArray arrayWithArray:@[@"@", @"&", @"$"]];
+        navigationArray = [NSMutableArray arrayWithArray:@[@"^", @"@", @"&", @"$"]];
         [navigationArray addObjectsFromArray:capitalArray];
         _navigationView = [CHCityNavigationView navigationViewWithButtonArray:navigationArray];
         _navigationView.backgroundColor = kColor(whiteColor);
