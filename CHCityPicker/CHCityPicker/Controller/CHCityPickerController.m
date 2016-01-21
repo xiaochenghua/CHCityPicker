@@ -217,7 +217,7 @@
         NSString *tmpKey = [NSString stringWithFormat:@"%ld", indexPath.section];
         NSNumber *tmpObj = [[NSNumber alloc] initWithFloat:cell.rowHeight];
         [userDefaults setObject:tmpObj forKey:tmpKey];
-        
+        [userDefaults synchronize];
         return cell;
     }
 }
