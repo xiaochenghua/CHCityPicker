@@ -211,43 +211,29 @@
         }
         [cell configCityListCellWithCityNames:array];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        //  缓存行高，section=0/1/2 && row=0的行高
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSString *tmpKey = [NSString stringWithFormat:@"%ld", indexPath.section];
+        NSNumber *tmpObj = [[NSNumber alloc] initWithFloat:cell.rowHeight];
+        [userDefaults setObject:tmpObj forKey:tmpKey];
+        
         return cell;
     }
 }
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *reuseIdentifierCustom = @"cellReuseIdentifierCustom";
-    
     if (self.searchController.active) {
         return 44;
     } else {
         if (indexPath.section >= 3) {
             return 44;
         }
-        
-        NSArray<NSString *> *array = nil;
-        switch (indexPath.section) {
-            case 0:
-                array = @[@"深圳"];
-                break;
-                
-            case 1:
-                array = self.historyCitys;
-                break;
-                
-            case 2:
-                array = self.hotCitys;
-                break;
-        }
-        
-        CHCityListCell *cell = (CHCityListCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifierCustom];
-        if (!cell) {
-            cell = [[CHCityListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierCustom];
-        }
-        [cell configCityListCellWithCityNames:array];
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell.rowHeight;
+        //  取出缓存的行高
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSString *tmpKey = [NSString stringWithFormat:@"%ld", indexPath.section];
+        return [[userDefaults objectForKey:tmpKey] floatValue];
     }
 }
 
