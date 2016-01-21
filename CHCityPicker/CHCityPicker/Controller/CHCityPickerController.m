@@ -56,6 +56,11 @@
      *  搜索结果集合
      */
     NSMutableArray       *searchResultList;
+    
+    /**
+     *  保存城市名和拼音的字典，拼音作为key，城市名作为value
+     */
+    NSMutableDictionary *cityNameAndPinyin;
 }
 
 @property (nonatomic, strong) UIButton             *closeButton;
@@ -87,6 +92,7 @@
     CHCityList *cityList = [[CHCityList alloc] initWithString:contents error:&error];
     cityDict = [NSMutableDictionary dictionaryWithCapacity:26];
     capitalArray = [NSMutableArray arrayWithCapacity:26];
+    cityNameAndPinyin = [NSMutableDictionary dictionaryWithCapacity:cityList.citys.count];
     for (int i = 65; i <= 90; i++) {
         NSString *tmpKey = [NSString stringwithInt:i needUpper:YES];
         NSMutableArray *tmpValue = [NSMutableArray array];
@@ -95,6 +101,7 @@
             NSString *cityCapital = [city.pinyin capitalNeedUpper:YES];
             if ([cityCapital isEqualToString:tmpKey]) {
                 [tmpValue addObject:city];
+                [cityNameAndPinyin setObject:city.cityName forKey:city.pinyin];
             }
         }
         if (tmpValue.count) {
@@ -295,7 +302,32 @@
     searchWords = self.searchController.searchBar.text;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", searchWords];
     searchResultList = [NSMutableArray arrayWithArray:[cityNames filteredArrayUsingPredicate:predicate]];
+    NSArray *searchPinyinList = [NSArray arrayWithArray:[[self ignoreCharacter:cityPinyins] filteredArrayUsingPredicate:predicate]];
+    [self processPinyinSearchWithArray:searchPinyinList];
     [self.tableView reloadData];
+}
+
+#pragma mark - Pinyin Process
+- (void)processPinyinSearchWithArray:(NSArray *)array {
+    for (int i = 0; i < array.count; i++) {
+        NSString *cityName = [cityNameAndPinyin objectForKey:array[i]];
+        if (![searchResultList containsObject:cityName]) {
+            [searchResultList addObject:cityName];
+        }
+    }
+}
+
+#pragma mark - Ignore "-" Process
+- (NSMutableArray *)ignoreCharacter:(NSMutableArray<NSString *> *)array {
+    for (int i = 0; i < array.count; i++) {
+        if ([array[i] containsString:@"_"]) {
+            NSRange range = [array[i] rangeOfString:@"_"];
+            NSUInteger location = range.location + 1;
+            NSString *tmpString = [array[i] substringFromIndex:location];
+            array[i] = tmpString;
+        }
+    }
+    return array;
 }
 
 #pragma mark - UISearchBarDelegate
@@ -326,7 +358,7 @@
 
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    NSLog(@"scrollView.contentOffset.y -> %lf", scrollView.contentOffset.y);
+//    NSLog(@"scrollView.contentOffset.y -> %lf", scrollView.contentOffset.y);
 }
 
 #pragma mark - Pressed - CityButton
@@ -360,7 +392,7 @@
     } else {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:index - 1];
         [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
-        NSLog(@"contentOffset.y --> %lf", self.tableView.contentOffset.y);
+//        NSLog(@"contentOffset.y --> %lf", self.tableView.contentOffset.y);
     }
 }
 
