@@ -81,7 +81,11 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        [self initCityData];
+//        [self initCityData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"currentThread -> %@", [NSThread currentThread]);
+            [self initCityData];
+        });
     }
     return self;
 }
