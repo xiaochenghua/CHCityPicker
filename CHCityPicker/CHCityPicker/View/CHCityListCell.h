@@ -15,19 +15,10 @@
 @property (nonatomic, assign) CGFloat rowHeight;
 
 /**
- *  初始化
+ *  配置Cell
  *
- *  @param style           style
- *  @param reuseIdentifier reuseIdentifier
- *  @param array           给定数组
- *
- *  @return 已初始化的Cell
+ *  @param array 给定数组
  */
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier cityNames:(NSArray<NSString *> *)array;
-
-/**
- *  配置Cell子控件标题
- */
-- (void)configTitleForCellSubView;
+- (void)configCityListCellWithCityNames:(NSArray<NSString *> *)array;
 
 @end

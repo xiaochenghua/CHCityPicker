@@ -52,6 +52,9 @@
      */
     NSString *searchWords;
     
+    /**
+     *  搜索结果集合
+     */
     NSMutableArray       *searchResultList;
 }
 
@@ -59,7 +62,6 @@
 @property (nonatomic, strong) UITableView          *tableView;
 
 @property (nonatomic, strong) UISearchController   *searchController;
-//@property (nonatomic, strong) NSMutableArray       *searchResultList;
 @property (nonatomic, strong) NSLayoutConstraint   *constraint;
 @property (nonatomic, copy  ) ReturnCityNameBlock  returnCityNameBlock;
 
@@ -69,8 +71,6 @@
 @property (nonatomic, copy  ) NSMutableArray<NSString *> *hotCitys;
 
 @end
-
-static NSString *reuseIdentifierCustom = @"cellReuseIdentifierCustom";
 
 @implementation CHCityPickerController
 
@@ -165,6 +165,8 @@ static NSString *reuseIdentifierCustom = @"cellReuseIdentifierCustom";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *reuseIdentifierSystem = @"cellReuseIdentifierSystem";
+    static NSString *reuseIdentifierCustom = @"cellReuseIdentifierCustom";
+
     if (self.searchController.active) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifierSystem];
         if (!cell) {
@@ -205,9 +207,9 @@ static NSString *reuseIdentifierCustom = @"cellReuseIdentifierCustom";
         
         CHCityListCell *cell = (CHCityListCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifierCustom];
         if (!cell) {
-            cell = [[CHCityListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierCustom cityNames:array];
+            cell = [[CHCityListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierCustom];
         }
-        [cell configTitleForCellSubView];
+        [cell configCityListCellWithCityNames:array];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
@@ -215,6 +217,8 @@ static NSString *reuseIdentifierCustom = @"cellReuseIdentifierCustom";
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *reuseIdentifierCustom = @"cellReuseIdentifierCustom";
+    
     if (self.searchController.active) {
         return 44;
     } else {
@@ -239,8 +243,10 @@ static NSString *reuseIdentifierCustom = @"cellReuseIdentifierCustom";
         
         CHCityListCell *cell = (CHCityListCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifierCustom];
         if (!cell) {
-            cell = [[CHCityListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierCustom cityNames:array];
+            cell = [[CHCityListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierCustom];
         }
+        [cell configCityListCellWithCityNames:array];
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell.rowHeight;
     }
 }
