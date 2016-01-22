@@ -47,6 +47,11 @@
     NSMutableArray<NSString *> *cityPinyins;
     
     /**
+     *  含有@"_"的城市拼音集合
+     */
+    NSMutableArray<NSString *> *specialCityPinyins;
+    
+    /**
      *  搜索关键字
      */
     NSString *searchWords;
@@ -127,11 +132,15 @@
     
     cityNames = [NSMutableArray arrayWithCapacity:originalCityArray.count];
     cityPinyins = [NSMutableArray arrayWithCapacity:originalCityArray.count];
+    specialCityPinyins = [NSMutableArray array];
     
     for (int i = 0; i < originalCityArray.count; i++) {
         CHCity *city = [[CHCity alloc] initWithDictionary:originalCityArray[i] error:&error];
         [cityNames addObject:city.cityName];
         [cityPinyins addObject:city.pinyin];
+        if ([city.pinyin containsString:@"_"]) {
+            [specialCityPinyins addObject:city.pinyin];
+        }
     }
 }
 
@@ -316,8 +325,19 @@
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     searchWords = self.searchController.searchBar.text;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", searchWords];
+    
     searchResultList = [NSMutableArray arrayWithArray:[cityNames filteredArrayUsingPredicate:predicate]];
-    NSArray *searchResultPinyinList = [NSArray arrayWithArray:[[self ignoreCharacter:cityPinyins] filteredArrayUsingPredicate:predicate]];
+    NSMutableArray<NSString *> *searchResultPinyinList = [NSMutableArray arrayWithArray:[[self ignoreSubstringWithArray:cityPinyins] filteredArrayUsingPredicate:predicate]];
+    
+    for (int i = 0; i < specialCityPinyins.count; i++) {
+        for (int j = 0; j < searchResultPinyinList.count; j++) {
+            if ([specialCityPinyins[i] containsString:searchResultPinyinList[j]]) {
+                searchResultPinyinList[j] = specialCityPinyins[i];
+                break;
+            }
+        }
+    }
+    
     [self processPinyinSearchWithArray:searchResultPinyinList];
     [self.tableView reloadData];
 }
@@ -333,7 +353,7 @@
 }
 
 #pragma mark - Ignore "-" Process
-- (NSMutableArray *)ignoreCharacter:(NSMutableArray<NSString *> *)array {
+- (NSMutableArray *)ignoreSubstringWithArray:(NSMutableArray<NSString *> *)array {
     for (int i = 0; i < array.count; i++) {
         if ([array[i] containsString:@"_"]) {
             NSRange range = [array[i] rangeOfString:@"_"];
