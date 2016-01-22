@@ -197,7 +197,7 @@
         NSString *resultString = searchResultList[indexPath.row];
         NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:resultString];
         NSRange range = [resultString rangeOfString:searchWords];
-        [attrString addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:range];
+        [attrString addAttribute:NSForegroundColorAttributeName value:kColor(orangeColor) range:range];
         cell.textLabel.attributedText = attrString;
         return cell;
     } else {
