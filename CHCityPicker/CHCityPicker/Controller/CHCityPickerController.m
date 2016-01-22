@@ -183,7 +183,11 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     if (self.searchController.active) {
-        return searchResultList.count;
+        if (self.searchController.searchBar.text.length && !searchResultList.count) {
+            return 1;
+        } else {
+            return searchResultList.count;
+        }
     } else {
         if (section < 3) {
             return 1;
@@ -203,11 +207,15 @@
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifierSystem];
         }
-        NSString *resultString = searchResultList[indexPath.row];
-        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:resultString];
-        NSRange range = [resultString rangeOfString:searchWords];
-        [attrString addAttribute:NSForegroundColorAttributeName value:kColor(orangeColor) range:range];
-        cell.textLabel.attributedText = attrString;
+        if (self.searchController.searchBar.text.length && !searchResultList.count) {
+            cell.textLabel.text = @"抱歉，未找到相关城市！";
+        } else {
+            NSString *resultString = searchResultList[indexPath.row];
+            NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:resultString];
+            NSRange range = [resultString rangeOfString:searchWords];
+            [attrString addAttribute:NSForegroundColorAttributeName value:kColor(orangeColor) range:range];
+            cell.textLabel.attributedText = attrString;
+        }
         return cell;
     } else {
         if (indexPath.section >= 3) {
