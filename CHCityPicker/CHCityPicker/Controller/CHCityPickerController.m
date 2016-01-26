@@ -13,8 +13,9 @@
 #import "CHButton.h"
 #import "CHCity.h"
 #import "NSString+Enhance.h"
+#import <CoreLocation/CoreLocation.h>
 
-@interface CHCityPickerController () <UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate>
+@interface CHCityPickerController () <UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate, CLLocationManagerDelegate>
 {
     /**
      *  是否已经布局
@@ -79,6 +80,8 @@
 @property (nonatomic, copy  ) NSMutableArray<NSString *> *historyCitys;
 @property (nonatomic, copy  ) NSMutableArray<NSString *> *hotCitys;
 
+@property (nonatomic, strong) CLLocationManager *locationManager;
+
 @end
 
 @implementation CHCityPickerController
@@ -87,6 +90,7 @@
     if (self = [super init]) {
         //  大幅减少初始化耗时，提高性能
         dispatch_async(dispatch_get_main_queue(), ^{
+            [self initLocationData];
             [self initCityData];
         });
     }
@@ -142,6 +146,15 @@
             [specialCityPinyins addObject:city.pinyin];
         }
     }
+}
+
+- (void)initLocationData {
+    self.locationManager = [[CLLocationManager alloc] init];
+    _locationManager.delegate = self;
+    _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    _locationManager.distanceFilter = 100.0;
+    [_locationManager requestWhenInUseAuthorization];
+    [_locationManager startUpdatingLocation];
 }
 
 - (void)viewDidLoad {
@@ -232,7 +245,7 @@
         NSArray<NSString *> *array = nil;
         switch (indexPath.section) {
             case 0:
-                array = @[@"深圳"];
+                array = @[@"定位中..."];
                 break;
                 
             case 1:
@@ -404,6 +417,40 @@
 //    NSLog(@"scrollView.contentOffset.y -> %lf", scrollView.contentOffset.y);
 }
 
+#pragma mark - CLLocationManagerDelegate
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSLog(@"%@", [NSThread currentThread]);
+        CLLocation *location = [locations lastObject];
+        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+        [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+            for (CLPlacemark *placemark in placemarks) {
+                NSDictionary *dict = [placemark addressDictionary];
+                NSString *tmpCityName = [dict objectForKey:@"City"];
+                NSString *cityName = [tmpCityName containsString:@"市"] ? [tmpCityName substringToIndex:[tmpCityName rangeOfString:@"市"].location] : tmpCityName;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    NSLog(@"%@", [NSThread currentThread]);
+                    //  更新控件
+                    CHCityListCell *cell = (CHCityListCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+                    [cell configCityListCellWithCityNames:@[cityName]];
+                });
+            }
+        }];
+    });
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if ([error code] == kCLErrorDenied) {
+            NSLog(@"定位error: 访问被拒绝");
+        } else if ([error code] == kCLErrorLocationUnknown) {
+            NSLog(@"定位error: 无法获取位置信息");
+        } else {
+            NSLog(@"%@", [error domain]);
+        }
+    });
+}
+
 #pragma mark - Pressed - CityButton
 - (void)cityButtonPressed:(UIButton *)btn {
     [self selectedCityBy:btn.titleLabel.text];
@@ -507,6 +554,12 @@
         _hotCitys = [NSMutableArray arrayWithObjects:@"上海", @"北京", @"广州", @"深圳", @"天津", @"杭州", @"南京", @"武汉", @"成都", @"沈阳", @"西安", nil];
     }
     return _hotCitys;
+}
+
+#pragma mark - viewWillDisappear
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [_locationManager stopUpdatingLocation];
 }
 
 #pragma mark - ReceiveMemoryWarning
