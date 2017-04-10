@@ -229,6 +229,12 @@
 				TargetAttributes = {
 					DD75D3401C3E44F4001C3A58 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = F6MKBTS8DW;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -421,11 +427,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = F6MKBTS8DW;
 				GCC_PREFIX_HEADER = "CHCityPicker/CHCityPicker-Prefix.pch";
 				INFOPLIST_FILE = CHCityPicker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = tk.arnold.CHCityPicker;
+				PRODUCT_BUNDLE_IDENTIFIER = com.arnoldxiao.CHCityPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -438,11 +445,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = F6MKBTS8DW;
 				GCC_PREFIX_HEADER = "CHCityPicker/CHCityPicker-Prefix.pch";
 				INFOPLIST_FILE = CHCityPicker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = tk.arnold.CHCityPicker;
+				PRODUCT_BUNDLE_IDENTIFIER = com.arnoldxiao.CHCityPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
