@@ -88,11 +88,8 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        //  大幅减少初始化耗时，提高性能
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self initLocationData];
-            [self initCityData];
-        });
+        [self initLocationData];
+        [self initCityData];
     }
     return self;
 }
@@ -152,8 +149,8 @@
     if ([CLLocationManager locationServicesEnabled]) {
         self.locationManager = [[CLLocationManager alloc] init];
         _locationManager.delegate = self;
-        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-        _locationManager.distanceFilter = 100.0;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
+        _locationManager.distanceFilter = 1000;
         [_locationManager requestWhenInUseAuthorization];
         [_locationManager startUpdatingLocation];
     }
@@ -427,33 +424,35 @@
 
 #pragma mark - CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        CLLocation *location = [locations lastObject];
-        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-        [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder reverseGeocodeLocation:locations.lastObject completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        if (!error && placemarks.count) {
             for (CLPlacemark *placemark in placemarks) {
                 NSDictionary *dict = [placemark addressDictionary];
                 NSString *tmpCityName = [dict objectForKey:@"City"];
                 NSString *cityName = [tmpCityName containsString:@"市"] ? [tmpCityName substringToIndex:[tmpCityName rangeOfString:@"市"].location] : tmpCityName;
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    //  更新控件
-                    [self setLocationCityDisplayName:cityName];
-                });
+                //  更新控件
+                [self setLocationCityDisplayName:cityName];
+                //  停止更新定位
+                [self.locationManager stopUpdatingLocation];
             }
-        }];
-    });
+        }
+    }];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        if ([error code] == kCLErrorDenied) {
-            [self setLocationCityDisplayName:@"未开启定位"];
-        } else if ([error code] == kCLErrorLocationUnknown) {
-            [self setLocationCityDisplayName:@"定位失败"];
-        } else {
-            NSLog(@"%@", [error domain]);
-        }
-    });
+    NSString *errorString = @"";
+    if ([error code] == kCLErrorDenied) {
+        errorString = @"未开启定位";
+    } else if ([error code] == kCLErrorLocationUnknown) {
+        errorString = @"定位失败";
+    } else {
+        NSLog(@"%@", [error domain]);
+    }
+    
+    if (errorString.length) {
+        [self setLocationCityDisplayName:errorString];
+    }
 }
 
 #pragma mark - Pressed - CityButton
