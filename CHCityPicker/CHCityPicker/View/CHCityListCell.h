@@ -21,4 +21,11 @@
  */
 - (void)configCityListCellWithCityNames:(NSArray<NSString *> *)array;
 
+/**
+ *  给定位Cell设置标题
+ *
+ *  @param title 标题
+ */
+- (void)setLocationCellSubviewWithTitle:(NSString *)title;
+
 @end

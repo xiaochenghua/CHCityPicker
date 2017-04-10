@@ -35,6 +35,12 @@ static const CGFloat margin = 12.0f;
     self.rowHeight = (btnHeight + margin) * ((cityNames.count - 1) / defaultCol) + margin * 2 + btnHeight;
 }
 
+- (void)setLocationCellSubviewWithTitle:(NSString *)title {
+    for (CHCityButton *btn in self.contentView.subviews) {
+        [btn setTitle:title forState:UIControlStateNormal];
+    }
+}
+
 - (void)setupSubviewsWithCityNames:(NSArray<NSString *> *)array {
     if (self.contentView.subviews) {
         for (CHCityButton *btn in self.contentView.subviews) {
