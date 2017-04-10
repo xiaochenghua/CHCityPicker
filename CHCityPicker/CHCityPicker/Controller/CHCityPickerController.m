@@ -77,8 +77,8 @@
 
 @property (nonatomic, strong) CHCityIndexView *indexView;
 
-@property (nonatomic, copy  ) NSMutableArray<NSString *> *historyCitys;
-@property (nonatomic, copy  ) NSMutableArray<NSString *> *hotCitys;
+@property (nonatomic, strong) NSMutableArray<NSString *> *historyCitys;
+@property (nonatomic, strong) NSMutableArray<NSString *> *hotCitys;
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
 
@@ -149,12 +149,14 @@
 }
 
 - (void)initLocationData {
-    self.locationManager = [[CLLocationManager alloc] init];
-    _locationManager.delegate = self;
-    _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    _locationManager.distanceFilter = 100.0;
-    [_locationManager requestWhenInUseAuthorization];
-    [_locationManager startUpdatingLocation];
+    if ([CLLocationManager locationServicesEnabled]) {
+        self.locationManager = [[CLLocationManager alloc] init];
+        _locationManager.delegate = self;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        _locationManager.distanceFilter = 100.0;
+        [_locationManager requestWhenInUseAuthorization];
+        [_locationManager startUpdatingLocation];
+    }
 }
 
 - (void)viewDidLoad {
@@ -182,6 +184,12 @@
     }
     
     [super updateViewConstraints];
+}
+
+- (void)setLocationCityDisplayName:(NSString *)displayName {
+    CHCityListCell *cell = (CHCityListCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+//    [cell configCityListCellWithCityNames:@[displayName]];
+    [cell setLocationCellSubviewWithTitle:displayName];
 }
 
 #pragma mark  - UITableViewDataSource
@@ -420,7 +428,6 @@
 #pragma mark - CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSLog(@"%@", [NSThread currentThread]);
         CLLocation *location = [locations lastObject];
         CLGeocoder *geocoder = [[CLGeocoder alloc] init];
         [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
@@ -429,10 +436,8 @@
                 NSString *tmpCityName = [dict objectForKey:@"City"];
                 NSString *cityName = [tmpCityName containsString:@"市"] ? [tmpCityName substringToIndex:[tmpCityName rangeOfString:@"市"].location] : tmpCityName;
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    NSLog(@"%@", [NSThread currentThread]);
                     //  更新控件
-                    CHCityListCell *cell = (CHCityListCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-                    [cell configCityListCellWithCityNames:@[cityName]];
+                    [self setLocationCityDisplayName:cityName];
                 });
             }
         }];
@@ -442,9 +447,9 @@
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         if ([error code] == kCLErrorDenied) {
-            NSLog(@"定位error: 访问被拒绝");
+            [self setLocationCityDisplayName:@"未开启定位"];
         } else if ([error code] == kCLErrorLocationUnknown) {
-            NSLog(@"定位error: 无法获取位置信息");
+            [self setLocationCityDisplayName:@"定位失败"];
         } else {
             NSLog(@"%@", [error domain]);
         }
