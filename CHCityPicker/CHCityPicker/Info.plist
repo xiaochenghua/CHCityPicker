@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>我们需要通过您的地理位置信息获取您周边的相关数据</string>
+	<string>我们需要通过您的地理位置信息获取您所在的城市</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
