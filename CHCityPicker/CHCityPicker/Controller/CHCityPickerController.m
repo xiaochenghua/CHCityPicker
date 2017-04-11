@@ -86,9 +86,13 @@
 
 @implementation CHCityPickerController
 
+- (void)dealloc {
+    NSLog(@"%@->%@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+}
+
 - (instancetype)init {
     if (self = [super init]) {
-        [self initLocationData];
+        [self.locationManager startUpdatingLocation];
         [self initCityData];
     }
     return self;
@@ -142,17 +146,6 @@
         if ([city.pinyin containsString:@"_"]) {
             [specialCityPinyins addObject:city.pinyin];
         }
-    }
-}
-
-- (void)initLocationData {
-    if ([CLLocationManager locationServicesEnabled]) {
-        self.locationManager = [[CLLocationManager alloc] init];
-        _locationManager.delegate = self;
-        _locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
-        _locationManager.distanceFilter = 1000;
-        [_locationManager requestWhenInUseAuthorization];
-        [_locationManager startUpdatingLocation];
     }
 }
 
@@ -433,10 +426,11 @@
                 NSString *cityName = [tmpCityName containsString:@"市"] ? [tmpCityName substringToIndex:[tmpCityName rangeOfString:@"市"].location] : tmpCityName;
                 //  更新控件
                 [self setLocationCityDisplayName:cityName];
-                //  停止更新定位
-                [self.locationManager stopUpdatingLocation];
             }
         }
+        
+        //  停止更新定位
+        [self.locationManager stopUpdatingLocation];
     }];
 }
 
@@ -560,10 +554,19 @@
     return _hotCitys;
 }
 
-#pragma mark - viewWillDisappear
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [_locationManager stopUpdatingLocation];
+- (CLLocationManager *)locationManager {
+    if (![CLLocationManager locationServicesEnabled]) {
+        return nil;
+    }
+    
+    if (!_locationManager) {
+        _locationManager = [[CLLocationManager alloc] init];
+        _locationManager.delegate = self;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
+        _locationManager.distanceFilter = 1000;
+        [_locationManager requestWhenInUseAuthorization];
+    }
+    return _locationManager;
 }
 
 #pragma mark - ReceiveMemoryWarning
